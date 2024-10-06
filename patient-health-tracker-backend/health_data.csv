@@ -1,0 +1,5 @@
+age,symptoms,previousConditions,disease
+25,"cough, fever","none","Flu"
+40,"chest pain","hypertension","Heart Disease"
+30,"nausea","none","Gastritis"
+50,"headache","diabetes","Migraine"
