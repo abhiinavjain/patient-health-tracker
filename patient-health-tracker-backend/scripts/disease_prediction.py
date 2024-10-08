@@ -1,25 +1,26 @@
-# scripts/disease_prediction.py
 import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
 import pickle
 
-# Function to make a prediction
-def predict_disease(input_data):
-    # Load the trained model (model.pkl should be in the same folder)
-    model = pickle.load(open('model.pkl', 'rb'))
-    
-    # Convert the input JSON string to a DataFrame
-    data = pd.DataFrame([input_data])
-    
-    # Make a prediction
-    prediction = model.predict(data)
-    
-    return prediction[0]
+# Load the dataset (replace 'your_dataset.csv' with your actual file path)
+df = pd.read_csv('D:\patient-health-tracker\patient-health-tracker-backend\your_dataset.csv')
 
-if __name__ == "__main__":
-    import sys, json
-    # Accept the input from command-line arguments as JSON
-    input_data = json.loads(sys.argv[1])
-    
-    # Call the prediction function and print the result
-    result = predict_disease(input_data)
-    print(result)
+# Features (all columns except 'prognosis') and target ('prognosis')
+X = df.drop('prognosis', axis=1)  # Features (symptoms)
+y = df['prognosis']  # Target (disease)
+
+# Split the data into training and testing sets (80% training, 20% testing)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Initialize the RandomForest model
+model = RandomForestClassifier()
+
+# Train the model
+model.fit(X_train, y_train)
+
+# Save the trained model as a pickle file
+with open('model.pkl', 'wb') as file:
+    pickle.dump(model, file)
+
+print("Model trained and saved as model.pkl")
