@@ -80,8 +80,7 @@ const PatientDashboard = () => {
         />
       </div>
       <PatientForm />
-      <Link to="/Doctor" className="text-blue-500 underline mt-4 inline-block">Go to Doctor's Dashboard</Link><br></br>
-      <Link to="/follow-ups" className="text-blue-500 underline">Go to Follow-Up Dashboard</Link>
+     
       {isUpdating && selectedPatient && (
         <UpdatePatientForm
           patient={selectedPatient}

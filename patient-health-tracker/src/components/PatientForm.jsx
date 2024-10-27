@@ -85,7 +85,9 @@ const PatientForm = () => {
         onChange={(e) => setHealthHistory(e.target.value)}
         className="border border-gray-300 p-2 rounded mb-4"
       />
-      <button type="submit" className="bg-blue-500 text-white p-2 rounded">Add Patient</button>
+      <div class="button-container">
+      <button type="submit" className="  bg-blue-500 text-white p-2 rounded" >Add Patient</button>
+      </div>
     </form>
   );
 };

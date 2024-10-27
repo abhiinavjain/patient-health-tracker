@@ -25,16 +25,22 @@ button {
     border: 1px;
     border-radius: 5px;
     transition: background-color 0.3s;
-   
+   justify-content: center;
+   align-items: center;
+   gap: 15px;
    
     
 }
-
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 button:hover {
     background-color: #051c2d; /* Darker shade on hover */
 }
 input{
-    
+   
     border: 2px solid #ccc;
     border-radius: 5px;
     padding: 10px;
