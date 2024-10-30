@@ -38,7 +38,7 @@ const PatientForm = () => {
           placeholder="Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="border border-gray-300 p-2 rounded"
+          className="border  p-2 rounded"
           required
         />
         <input
@@ -46,7 +46,7 @@ const PatientForm = () => {
           placeholder="Age"
           value={age}
           onChange={(e) => setAge(e.target.value)}
-          className="border border-gray-300 p-2 rounded"
+          className="border  p-2 rounded"
           required
         />
       </div>
@@ -55,14 +55,14 @@ const PatientForm = () => {
           placeholder="Symptoms (comma-separated)"
           value={symptoms}
           onChange={(e) => setSymptoms(e.target.value)}
-          className="border border-gray-300 p-2 rounded"
+          className="border p-2 rounded"
           required
         />
         <input
           placeholder="Previous Conditions (comma-separated)"
           value={previousConditions}
           onChange={(e) => setPreviousConditions(e.target.value)}
-          className="border border-gray-300 p-2 rounded"
+          className="border  p-2 rounded"
           
         />
       </div>
@@ -71,23 +71,23 @@ const PatientForm = () => {
           placeholder="Test Results (comma-separated)"
           value={testResults}
           onChange={(e) => setTestResults(e.target.value)}
-          className="border border-gray-300 p-2 rounded"
+          className="border p-2 rounded"
         />
         <input
           placeholder="Medications (comma-separated)"
           value={medications}
           onChange={(e) => setMedications(e.target.value)}
-          className="border border-gray-300 p-2 rounded"
+          className="border  p-2 rounded"
         />
       </div>
       <input
         placeholder="Health History"
         value={healthHistory}
         onChange={(e) => setHealthHistory(e.target.value)}
-        className="border border-gray-300 p-2 rounded mb-4"
+        className="border p-2 rounded mb-4"
       />
       <div class="button-container">
-      <button type="submit" className="  bg-blue-500 text-white p-2 rounded" >Add Patient</button>
+      <button type="submit" className="  bg-04395E text-white p-2 rounded" >Add Patient</button>
       </div>
     </form>
   );

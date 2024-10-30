@@ -7,6 +7,7 @@ import Navbar from './pages/NavBar';
 
 const AppRouter = () => {
   return (
+    
     <Router>
       <Navbar/>
       <Routes>

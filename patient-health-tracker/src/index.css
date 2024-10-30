@@ -39,7 +39,7 @@ button:hover {
 input{
    backdrop-filter: blur(53px);
    background: transparent;
-    border: 2px solid #ccc;
+    border: 1px solid rgb(180, 210, 237);
     border-radius: 5px;
     padding: 10px;
     width: 100%;
@@ -53,7 +53,7 @@ input{
 
 
 input[type="text"]:focus, input[type="number"]:focus {
-    border-color: #051e30;
+    border-color: #03111b;
     display: flex;               /* Enable Flexbox */
     flex-direction: column;      /* Stack children vertically */
     align-items: center;         /* Center items horizontally */

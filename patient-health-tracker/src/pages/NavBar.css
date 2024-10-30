@@ -1,17 +1,56 @@
-.navbar{
-   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 20px;
-  
-}
-
-.navLogo{
-    margin: 0;
-}
-
-.navlinks{
-    list-style: none;
+.navbar {
     display: flex;
-    gap: 15PX;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 30px; /* Increased padding for better spacing */
+     /* Light background for the navbar */
+     /* Subtle shadow for depth */
+    gap: 600px; /* Add gap between logo and nav links */
+}
+
+.navLogo h1 {
+    margin: 0; /* Reset margin for logo */
+    font-size: 24px; /* Adjust font size for the logo */
+    color: #333; 
+    font-weight: bold;/* Dark color for the logo */
+}
+
+.navlinks {
+    list-style: none; /* Remove default list styles */
+    display: flex; /* Use flexbox for horizontal alignment */
+    gap: 30px; 
+    font-size: 20px;/* Space between navbar items */
+}
+
+.navlinks li {
+    position: relative; /* Position for pseudo-elements */
+}
+
+.navlink {
+    text-decoration: none; /* Remove underline from links */
+    color: #007bff; /* Bootstrap primary color */
+    padding: 10px 15px; /* Padding for clickable area */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+
+.navlink.active {
+    background-color: #007bff; /* Background color for active link */
+    color: white; /* White text for active link */
+}
+
+/* Optional: Add some responsiveness */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column; /* Stack items on smaller screens */
+        align-items: flex-start; /* Align items to the start */
+    }
+
+    .navlinks {
+        flex-direction: column; /* Stack nav links vertically */
+        gap: 15px; /* Space between nav links */
+        width: 100%; /* Full width for nav links */
+        padding: 10px 0; /* Padding for nav links */
+    }
 }

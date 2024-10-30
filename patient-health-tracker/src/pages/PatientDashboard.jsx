@@ -6,7 +6,6 @@ import UpdatePatientForm from "../components/UpdatePatientForm";
 import PatientCard from "../components/PatientCard";
 
 
-
 const PatientDashboard = () => {
   const [patients, setPatients] = useState([]);
   const [selectedPatient, setSelectedPatient] = useState(null);
@@ -57,7 +56,7 @@ const PatientDashboard = () => {
   return (
    
   
-       
+
     <div className=" min-h-screen p-6">
      
       <h1 className="text-3xl font-bold text-center mb-6">Patient Dashboard</h1>
@@ -69,7 +68,7 @@ const PatientDashboard = () => {
         placeholder="Search by name"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
-        className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 pr-28 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+        className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-rgb(180, 210, 237) rounded-md pl-3 pr-28 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
       />
       <button
         class="absolute top-1 right-1 flex items-center rounded bg-slate-800 py-1 px-2.5 border border-transparent text-center text-sm text-white transition-all shadow-sm hover:shadow focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
@@ -108,7 +107,6 @@ const PatientDashboard = () => {
       
     </div>
     
-  
 
     
   );
