@@ -4,7 +4,8 @@ import axios from "axios";
 import PatientForm from "../components/PatientForm";
 import UpdatePatientForm from "../components/UpdatePatientForm";
 import PatientCard from "../components/PatientCard";
-import { Link } from 'react-router-dom';
+
+
 
 const PatientDashboard = () => {
   const [patients, setPatients] = useState([]);
@@ -54,32 +55,37 @@ const PatientDashboard = () => {
   );
 
   return (
-    <div className="bg-gray-100 min-h-screen p-6">
+   
+  
+       
+    <div className=" min-h-screen p-6">
+     
       <h1 className="text-3xl font-bold text-center mb-6">Patient Dashboard</h1>
-      <div className="mb-4">
-        <input
-          type="text"
-          placeholder="Search by name"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="border border-gray-300 p-2 rounded w-1/3 mr-2"
-        />
-        <input
-          type="text"
-          placeholder="Filter by age"
-          value={ageFilter}
-          onChange={(e) => setAgeFilter(e.target.value)}
-          className="border border-gray-300 p-2 rounded w-1/3 mr-2"
-        />
-        <input
-          type="text"
-          placeholder="Filter by previous conditions"
-          value={previousConditionsFilter}
-          onChange={(e) => setPreviousConditionsFilter(e.target.value)}
-          className="border border-gray-300 p-2 rounded w-1/3"
-        />
-      </div>
+      <div class="flex justify-center mt-4">
+  <div class="w-full max-w-sm min-w-[200px]">
+    <div class="relative">
+      <input
+        type="text"
+        placeholder="Search by name"
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 pr-28 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+      />
+      <button
+        class="absolute top-1 right-1 flex items-center rounded bg-slate-800 py-1 px-2.5 border border-transparent text-center text-sm text-white transition-all shadow-sm hover:shadow focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+        type="button"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 mr-2">
+          <path fill-rule="evenodd" d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z" clip-rule="evenodd" />
+        </svg>
+        Search
+      </button>
+    </div>
+  </div>
+</div>
+
       <PatientForm />
+      
      
       {isUpdating && selectedPatient && (
         <UpdatePatientForm
@@ -88,7 +94,7 @@ const PatientDashboard = () => {
           onCancel={() => setIsUpdating(false)}
         />
       )}
-      <h2 className="text-2xl mt-8">Patient Records</h2>
+      <h1 className="text-2xl font-bold text-center mb-6" >Patient Records</h1>
       <div className="flex flex-wrap justify-center">
         {filteredPatients.map(patient => (
           <PatientCard
@@ -101,6 +107,8 @@ const PatientDashboard = () => {
       </div>
       
     </div>
+    
+  
 
     
   );

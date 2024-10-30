@@ -3,13 +3,10 @@
 @tailwind utilities;
 body {
     font-family: 'Roboto', sans-serif;
-    color: #333;
-  
-    
     display: flex;               /* Enable Flexbox */
     flex-direction: column;      /* Stack children vertically */
     align-items: center;         /* Center items horizontally */
-
+    
 }
 
 h1, h2 {
@@ -40,7 +37,8 @@ button:hover {
     background-color: #051c2d; /* Darker shade on hover */
 }
 input{
-   
+   backdrop-filter: blur(53px);
+   background: transparent;
     border: 2px solid #ccc;
     border-radius: 5px;
     padding: 10px;
@@ -62,12 +60,12 @@ input[type="text"]:focus, input[type="number"]:focus {
  /* Highlight border on focus */
 }
 .card {
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+   
+    
     padding: 20px;
-    margin: 10px 0;
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    margin: 15px 0;
+    
     backdrop-filter: blur(10px);
     align-items: center;
     display: flex;               /* Enable Flexbox */
