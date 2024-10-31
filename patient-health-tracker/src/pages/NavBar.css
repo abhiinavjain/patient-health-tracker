@@ -2,9 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 15px 30px; /* Increased padding for better spacing */
-     /* Light background for the navbar */
-     /* Subtle shadow for depth */
+    padding: 0% 30px; /* Increased padding for better spacing */
     gap: 500px; /* Add gap between logo and nav links */
 }
 

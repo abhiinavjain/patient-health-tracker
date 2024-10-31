@@ -3,17 +3,10 @@ import React from "react";
 import { HoverEffect } from "./ui/card-hover-effect";
 import { BackgroundGradient } from "./ui/BackgroundGradient";
 
-export function CardHoverEffectDemo() {
-    return (
-      <div className="max-w-5xl mx-auto px-8">
-        <HoverEffect items={patients} />
-      </div>
-    );
-  }
 
 export const patients = ({ patient, onEdit, onDelete }) => {
     return (
-        <BackgroundGradient className="card rounded-[22px] max-w-m sm:p-4 bg-white">
+        <BackgroundGradient className="cardb rounded-[22px] max-w-s sm:p-5 bg-white">
         <div className=" card ">
             <h3 className="font-bold">{patient.name}</h3>
             <p>Age: {patient.age}</p>
