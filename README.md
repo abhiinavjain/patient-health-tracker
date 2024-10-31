@@ -128,6 +128,6 @@ cd <project-folder>
 2. Open a new terminal for the **frontend** and run:
    ```bash
    cd patient-health-tracker
-   npm start
+   npm run dev
    ```
 
