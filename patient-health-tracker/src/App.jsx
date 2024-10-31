@@ -5,6 +5,8 @@ import DiseasePrediction from './components/DiseasePrediction';
 
 import { motion } from "framer-motion";
 import { AuroraBackground } from './components/ui/aurora-background';
+import { FloatingDockDemo } from './components/FloatingDockDemo';
+import { FloatingDock } from './components/ui/floating-dock';
 
 
 function App() {
@@ -25,10 +27,11 @@ function App() {
       >
       <AppRouter />
       <DiseasePrediction/>
+     
         
     </motion.div>
     </AuroraBackground>
-      
+     
  
     </div>
   );
