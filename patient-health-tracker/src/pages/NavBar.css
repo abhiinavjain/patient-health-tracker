@@ -5,13 +5,13 @@
     padding: 15px 30px; /* Increased padding for better spacing */
      /* Light background for the navbar */
      /* Subtle shadow for depth */
-    gap: 600px; /* Add gap between logo and nav links */
+    gap: 500px; /* Add gap between logo and nav links */
 }
 
 .navLogo h1 {
     margin: 0; /* Reset margin for logo */
     font-size: 24px; /* Adjust font size for the logo */
-    color: #333; 
+    
     font-weight: bold;/* Dark color for the logo */
 }
 

@@ -32,7 +32,7 @@ const DiseasePrediction = () => {
 
     return (
         <div>
-            <h2>Disease Prediction</h2>
+            <h1>Disease Prediction</h1>
             <form onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor="age">Age:</label>

@@ -41,11 +41,11 @@ const FollowUpDashboard = () => {
     }, []);
 
     return (
-        <div className="min-h-screen bg-gray-100 p-8">
+        <div className="min-h-screen  p-8">
             <h1 className="text-3xl font-bold mb-6 text-center">Follow-Up Dashboard</h1>
 
             {/* Appointment Form */}
-            <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-lg">
+            <form onSubmit={handleSubmit} className="p-6 rounded-lg ">
                 <div className="mb-4">
                     <label className="block mb-2 font-semibold">Patient Name:</label>
                     <input
