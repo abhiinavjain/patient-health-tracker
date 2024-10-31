@@ -59,7 +59,7 @@ const DiseasePrediction = () => {
                 <button type="submit">Predict Disease</button>
             </form>
             {prediction && <p>Predicted Disease: {prediction}</p>}
-            {error && <p style={{ color: 'red' }}>{error}</p>}
+            {error && <p style={{ color: 'blue' }}>{error}</p>}
         </div>
     );
 };
