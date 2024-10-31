@@ -1,4 +1,6 @@
+// UpdatePatientForm.js
 import React, { useState } from "react";
+import axios from "axios";
 
 const UpdatePatientForm = ({ patient, onUpdate, onCancel }) => {
   const [updatedPatient, setUpdatedPatient] = useState({ ...patient });
@@ -11,9 +13,21 @@ const UpdatePatientForm = ({ patient, onUpdate, onCancel }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onUpdate(updatedPatient);
+    try {
+      // Make a PUT request to update the patient on the backend
+      const response = await axios.put(
+        `http://localhost:5000/api/patients/${updatedPatient._id}`, // replace with your server address
+        updatedPatient
+      );
+      // Call onUpdate to refresh the parent component’s patient data if needed
+      onUpdate(response.data);
+      alert("Patient updated successfully");
+    } catch (error) {
+      console.error("Failed to update patient:", error);
+      alert("Error updating patient. Please try again.");
+    }
   };
 
   return (
@@ -89,6 +103,7 @@ const UpdatePatientForm = ({ patient, onUpdate, onCancel }) => {
       <div className="mb-4">
         <label className="block text-gray-700 text-sm font-bold mb-2">Health History:</label>
         <input
+          type="text"
           name="healthHistory"
           value={updatedPatient.healthHistory}
           onChange={handleChange}
