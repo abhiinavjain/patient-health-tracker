@@ -121,13 +121,13 @@ cd <project-folder>
 #### Step 5: Running the Project Locally
 1. Start the **backend server**:
    ```bash
-   cd backend
+   cd patient-health-tracker-backend
    npm start
    ```
 
 2. Open a new terminal for the **frontend** and run:
    ```bash
-   cd frontend
+   cd patient-health-tracker
    npm start
    ```
 
