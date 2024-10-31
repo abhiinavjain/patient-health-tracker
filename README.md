@@ -93,6 +93,9 @@ cd <project-folder>
 3. Add essential frontend libraries:
    ```bash
    npm install axios
+   npm install react react-dom
+   npm install @tabler/icons-react
+   npm install framer-motion
    ```
 
 #### Step 4: Install Python and Related Dependencies (for AI Model)
