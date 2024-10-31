@@ -49,7 +49,7 @@ cd <project-folder>
 #### Step 2: Install Backend Dependencies
 1. Navigate to the backend folder:
    ```bash
-   cd backend
+   cd patient-health-tracker-backend
    ```
    
 2. Install the backend dependencies:
@@ -81,9 +81,10 @@ cd <project-folder>
 
 #### Step 3: Install Frontend Dependencies
 1. Go to the frontend directory:
-   ```bash
-   cd ../frontend
-   ```
+  - Open a new terminal 
+     ```bash
+      cd patient-health-tracker
+     ```
    
 2. Install the frontend dependencies:
    ```bash
