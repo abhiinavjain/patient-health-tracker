@@ -26,7 +26,7 @@ function App() {
         className="relative flex flex-col gap-4 items-center justify-center px-4"
       >
       <AppRouter />
-      <DiseasePrediction/>
+      
      
         
     </motion.div>

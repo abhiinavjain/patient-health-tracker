@@ -4,6 +4,7 @@ import axios from "axios";
 import PatientForm from "../components/PatientForm";
 import UpdatePatientForm from "../components/UpdatePatientForm";
 import PatientCard from "../components/PatientCard";
+import DiseasePrediction from "../components/DiseasePrediction";
 
 
 const PatientDashboard = () => {
@@ -103,7 +104,7 @@ const PatientDashboard = () => {
           />
         ))}
       </div>
-      
+      <DiseasePrediction/>
     </div>
     
 
