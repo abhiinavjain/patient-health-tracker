@@ -104,6 +104,7 @@ const PatientDashboard = () => {
           />
         ))}
       </div>
+      <br></br>
       <DiseasePrediction/>
     </div>
     

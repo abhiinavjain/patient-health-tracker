@@ -3,9 +3,17 @@ const express = require('express');
 const router = express.Router();
 const Appointment = require('../models/Appointment'); // Adjust the path if necessary
 
-// Your existing route handlers here...
+// GET all appointments
+router.get('/appointments', async (req, res) => {
+    try {
+        const appointments = await Appointment.find();
+        res.status(200).json(appointments);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
 
-// Example of creating an appointment
+// POST to create an appointment
 router.post('/appointments', async (req, res) => {
     const { patientName, appointmentDate, message, patientEmail } = req.body; // Make sure to include patientEmail
 

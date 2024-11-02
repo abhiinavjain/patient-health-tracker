@@ -1,4 +1,3 @@
-// server.js
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -32,21 +31,31 @@ app.use('/api', patientRoutes);
 
 // Schedule a task to run every minute (adjust as necessary)
 cron.schedule('* * * * *', async () => {
-    const appointments = await Appointment.find(); // Fetch all appointments
-    const now = new Date();
+    try {
+        const appointments = await Appointment.find(); // Fetch all appointments
+        const now = new Date();
 
-    appointments.forEach(async (appointment) => {
-        const appointmentDate = new Date(appointment.appointmentDate);
-        // Check if the appointment is within the next hour
-        if (appointmentDate - now <= 60 * 60 * 1000 && appointmentDate - now > 0) {
-            const emailSent = await sendEmail(
-                appointment.patientEmail, // Ensure you have the patient's email in your model
-                'Appointment Reminder',
-                `Dear ${appointment.patientName},\n\nThis is a reminder for your appointment on ${appointmentDate}.\n\nBest,\nYour Health Tracking System`
-            );
-            console.log(`Reminder email sent to ${appointment.patientEmail}`);
-        }
-    });
+        const emailPromises = appointments.map(async (appointment) => {
+            const appointmentDate = new Date(appointment.appointmentDate);
+            // Check if the appointment is within the next hour
+            if (appointmentDate - now <= 60 * 60 * 1000 && appointmentDate - now > 0) {
+                try {
+                    await sendEmail(
+                        appointment.patientEmail, // Ensure you have the patient's email in your model
+                        'Appointment Reminder',
+                        `Dear ${appointment.patientName},\n\nThis is a reminder for your appointment on ${appointmentDate}.\n\nBest,\nYour Health Tracking System`
+                    );
+                    console.log(`Reminder email sent to ${appointment.patientEmail}`);
+                } catch (error) {
+                    console.error(`Failed to send email to ${appointment.patientEmail}:`, error);
+                }
+            }
+        });
+
+        await Promise.all(emailPromises); // Wait for all email promises to complete
+    } catch (error) {
+        console.error('Error fetching appointments:', error);
+    }
 });
 
 // Start Server

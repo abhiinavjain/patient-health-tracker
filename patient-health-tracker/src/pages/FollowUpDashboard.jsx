@@ -6,6 +6,7 @@ const FollowUpDashboard = () => {
         patientName: '',
         appointmentDate: '',
         message: '',
+        patientEmail: '', // Add this line
     });
 
     const [appointments, setAppointments] = useState([]);
@@ -18,16 +19,14 @@ const FollowUpDashboard = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            // Send form data to the backend to schedule the appointment
             const response = await axios.post('http://localhost:5000/api/appointments', formData);
             setAppointments([...appointments, response.data]);
-            setFormData({ patientName: '', appointmentDate: '', message: '' });
+            setFormData({ patientName: '', appointmentDate: '', message: '', patientEmail: '' }); // Reset form
         } catch (error) {
             console.error('Error scheduling appointment', error);
         }
     };
 
-    // Fetch appointments when the component mounts
     useEffect(() => {
         const fetchAppointments = async () => {
             try {
@@ -41,7 +40,7 @@ const FollowUpDashboard = () => {
     }, []);
 
     return (
-        <div className="min-h-screen  p-8">
+        <div className="min-h-screen p-8">
             <h1 className="text-3xl font-bold mb-6 text-center">Follow-Up Dashboard</h1>
 
             {/* Appointment Form */}
@@ -81,28 +80,31 @@ const FollowUpDashboard = () => {
                     />
                 </div>
 
-                <button
-                    type="submit"
-                    className="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition duration-300"
-                >
-                    Schedule Appointment
-                </button>
+                <div className="mb-4">
+                    <label className="block mb-2 font-semibold">Patient Email:</label>
+                    <input
+                        type="email"
+                        name="patientEmail"
+                        value={formData.patientEmail}
+                        onChange={handleInputChange}
+                        className="border border-gray-300 p-2 rounded-lg w-full"
+                        required
+                    />
+                </div>
+
+                <button type="submit" className="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg">Schedule Appointment</button>
             </form>
 
-            {/* List of Scheduled Appointments */}
+            {/* Appointments List */}
             <div className="mt-8">
-                <h2 className="text-2xl mb-4">Upcoming Follow-Ups</h2>
-                {appointments.length > 0 ? (
-                    appointments.map((appointment, index) => (
-                        <div key={index} className="bg-white p-4 mb-4 rounded-lg shadow-lg">
-                            <p><strong>Patient:</strong> {appointment.patientName}</p>
-                            <p><strong>Appointment Date:</strong> {new Date(appointment.appointmentDate).toLocaleString()}</p>
-                            <p><strong>Reminder Message:</strong> {appointment.message}</p>
-                        </div>
-                    ))
-                ) : (
-                    <p>No follow-ups scheduled yet.</p>
-                )}
+                <h2 className="text-2xl font-bold mb-4">Upcoming Appointments</h2>
+                <ul className="list-disc list-inside">
+                    {appointments.map((appointment) => (
+                        <li key={appointment._id}>
+                            <strong>{appointment.patientName}</strong> on {new Date(appointment.appointmentDate).toLocaleString()}: {appointment.message}
+                        </li>
+                    ))}
+                </ul>
             </div>
         </div>
     );
