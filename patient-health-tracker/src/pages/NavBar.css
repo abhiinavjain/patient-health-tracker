@@ -3,7 +3,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 0% 30px; /* Increased padding for better spacing */
-    gap: 575px; /* Add gap between logo and nav links */
+    gap: 415px; /* Add gap between logo and nav links */
 }
 
 .navLogo h1 {

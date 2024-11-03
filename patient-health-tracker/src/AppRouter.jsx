@@ -4,6 +4,7 @@ import PatientDashboard from './pages/PatientDashboard';
 import FollowUpDashboard from './pages/FollowUpDashboard';
 import PatientRecords from './pages/PatientRecords';
 import Navbar from './pages/NavBar';
+import AddPatient from './pages/AddPatient';
 
 const AppRouter = () => {
   return (
@@ -12,7 +13,8 @@ const AppRouter = () => {
       <Routes>
         <Route path="/" element={<PatientDashboard />} />
         <Route path="/follow-ups" element={<FollowUpDashboard />} />
-        <Route path="/records" element={<PatientRecords />} /> {/* New Route */}
+        <Route path="/records" element={<PatientRecords />} /> 
+        <Route path="/add-patient" element={<AddPatient/>}/>
       </Routes>
     </Router>
   );

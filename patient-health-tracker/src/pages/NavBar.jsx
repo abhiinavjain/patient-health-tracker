@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
     return (
-        <navbar fixed="top" className="navbar">
+        <nav fixed="top" className="navbar">
             <div className="navLogo">
-                <h1>Patient Health Tracker</h1>
+                <h1>Well Path</h1>
             </div>
             <ul className="navlinks">
                 <li>
@@ -16,13 +16,16 @@ const Navbar = () => {
                     <Link to="/follow-ups" className="navlink"><h2>Book Appointment</h2></Link>
                 </li>
                 <li>
-                    <Link to={"https://abhiinavjain-portfolio.vercel.app/"} target="blank" className="navlink"><h2>About Developer</h2></Link>
+                    <Link to={"/add-patient"} className="navlink"><h2>Add Patient</h2></Link>
                 </li>
                 <li>
                     <Link to={"/records"} className="navlink"><h2>Patient Records</h2></Link>
                 </li>
+                <li>
+                    <Link to={"https://abhiinavjain-portfolio.vercel.app/"} target="blank" className="navlink"><h2>About Developer</h2></Link>
+                </li>
             </ul>
-        </navbar>
+        </nav>
     );
 };
 
