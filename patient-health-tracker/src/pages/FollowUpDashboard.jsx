@@ -94,6 +94,9 @@ const FollowUpDashboard = () => {
 
                 <button type="submit" className="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg">Schedule Appointment</button>
             </form>
+            <footer className="mt-16 text-center">
+                <p className="text-sm text-gray-500">&copy; 2024 Well Path. All rights reserved.</p>
+            </footer>
         </div>
     );
 };
