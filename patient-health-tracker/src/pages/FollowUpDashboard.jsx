@@ -94,18 +94,6 @@ const FollowUpDashboard = () => {
 
                 <button type="submit" className="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg">Schedule Appointment</button>
             </form>
-
-            {/* Appointments List */}
-            <div className="mt-8">
-                <h2 className="text-2xl font-bold mb-4">Upcoming Appointments</h2>
-                <ul className="list-disc list-inside">
-                    {appointments.map((appointment) => (
-                        <li key={appointment._id}>
-                            <strong>{appointment.patientName}</strong> on {new Date(appointment.appointmentDate).toLocaleString()}: {appointment.message}
-                        </li>
-                    ))}
-                </ul>
-            </div>
         </div>
     );
 };

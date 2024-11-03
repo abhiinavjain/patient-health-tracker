@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 const UpdatePatientForm = ({ patient, onUpdate, onCancel }) => {
   const [updatedPatient, setUpdatedPatient] = useState({ ...patient });
@@ -11,9 +12,18 @@ const UpdatePatientForm = ({ patient, onUpdate, onCancel }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onUpdate(updatedPatient);
+    try {
+      // Make an API call to update the patient in the backend
+      const response = await axios.put(
+        `http://localhost:5000/api/patients/${patient._id}`, // Adjust URL as needed
+        updatedPatient
+      );
+      onUpdate(response.data); // Pass updated patient data to the parent component
+    } catch (error) {
+      console.error("Error updating patient", error);
+    }
   };
 
   return (

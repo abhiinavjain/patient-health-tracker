@@ -18,6 +18,9 @@ const Navbar = () => {
                 <li>
                     <Link to={"https://abhiinavjain-portfolio.vercel.app/"} target="blank" className="navlink"><h2>About Developer</h2></Link>
                 </li>
+                <li>
+                    <Link to={"/records"} className="navlink"><h2>Patient Records</h2></Link>
+                </li>
             </ul>
         </navbar>
     );
