@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import DiseasePredictionForm from './DiseasePredictionForm';
 
 const DiseasePrediction = () => {
     const [patientData, setPatientData] = useState({
@@ -32,34 +33,7 @@ const DiseasePrediction = () => {
 
     return (
         <div>
-            <h1 className="text-2xl font-bold text-center mb-6">Disease Prediction</h1>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="age">Age:</label>
-                    <input
-                        type="number"
-                        id="age"
-                        name="age"
-                        value={patientData.age}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div>
-                    <label htmlFor="symptoms">Symptoms:</label>
-                    <input
-                        type="text"
-                        id="symptoms"
-                        name="symptoms"
-                        value={patientData.symptoms}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <button type="submit">Predict Disease</button>
-            </form>
-            {prediction && <p>Predicted Disease: {prediction}</p>}
-            {error && <p style={{ color: 'blue' }}>{error}</p>}
+            <DiseasePredictionForm/>
         </div>
     );
 };

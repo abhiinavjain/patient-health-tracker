@@ -42,8 +42,7 @@ const DiseasePredictionForm = () => {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold">Disease Prediction</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit}>
         <div>
           <label>Age:</label>
           <input
@@ -51,7 +50,7 @@ const DiseasePredictionForm = () => {
             name="age"
             value={formData.age}
             onChange={handleChange}
-            className="border p-2 w-full"
+            className="border p-2"
             required
           />
         </div>
