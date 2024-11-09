@@ -31,7 +31,7 @@ const DiseasePredictionForm = () => {
       setPrediction(response.data.prediction);
       setError(null); // Clear any previous errors
     } catch (err) {
-      setError("Visit Doctor its very serious");
+      setError("Please Visit Doctor its very serious");
       console.error("Prediction error:", err);
     }
   };
