@@ -6,9 +6,6 @@ const DiseasePredictionForm = () => {
   const [formData, setFormData] = useState({
     age: "",
     symptoms: "",
-    testResults: "",
-    medications: "",
-    healthHistory: "",
   });
 
   const [prediction, setPrediction] = useState(null);
@@ -34,88 +31,64 @@ const DiseasePredictionForm = () => {
       setPrediction(response.data.prediction);
       setError(null); // Clear any previous errors
     } catch (err) {
-      setError("Error while predicting disease. Please try again.");
+      setError("An error occurred while predicting the disease. Please try again.");
       console.error("Prediction error:", err);
-     
     }
   };
 
   return (
-    <div>
+    <div className="max-w-md mx-auto p-6 rounded-lg ">
+      <h2 className="text-2xl font-bold mb-4">Disease Prediction</h2>
+      <p className="mb-6 text-gray-600">
+        Discover potential health insights based on your age and symptoms. Our AI-powered prediction system helps identify possible health conditions, providing guidance on the next steps in your wellness journey. Just fill in your information and get a prediction instantly!
+      </p>
+
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>Age:</label>
+        <div className="mb-4">
+          <label className="block font-semibold mb-1">Age:</label>
           <input
             type="number"
             name="age"
             value={formData.age}
             onChange={handleChange}
-            className="border p-2"
+            className="border p-2 w-full rounded-md"
             required
           />
         </div>
-        <div>
-          <label>Symptoms (comma-separated):</label>
+        <div className="mb-4">
+          <label className="block font-semibold mb-1">Symptoms (comma-separated):</label>
           <input
             type="text"
             name="symptoms"
             value={formData.symptoms}
             onChange={handleChange}
-            className="border p-2 w-full"
-            required
-          />
-        </div>
-        <div>
-          <label>Test Results (comma-separated):</label>
-          <input
-            type="text"
-            name="testResults"
-            value={formData.testResults}
-            onChange={handleChange}
-            className="border p-2 w-full"
-            required
-          />
-        </div>
-        <div>
-          <label>Medications (comma-separated):</label>
-          <input
-            type="text"
-            name="medications"
-            value={formData.medications}
-            onChange={handleChange}
-            className="border p-2 w-full"
-            required
-          />
-        </div>
-        <div>
-          <label>Health History (comma-separated):</label>
-          <input
-            type="text"
-            name="healthHistory"
-            value={formData.healthHistory}
-            onChange={handleChange}
-            className="border p-2 w-full"
+            className="border p-2 w-full rounded-md"
+            placeholder="e.g., cough, fever, headache"
             required
           />
         </div>
         <button
           type="submit"
-          className="bg-blue-500 text-white p-2 rounded-md"
+          className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-200"
         >
-          Predict Disease
+          Get Prediction
         </button>
       </form>
 
       {/* Display the prediction result */}
       {prediction && (
-        <div className="mt-4">
+        <div className="mt-6">
           <h3 className="text-xl font-bold">Prediction Result:</h3>
-          <p>{prediction}</p>
+          <p className="mt-2 text-gray-700">{prediction}</p>
         </div>
       )}
 
       {/* Display any errors */}
       {error && <p className="text-red-500 mt-4">{error}</p>}
+      <br /> <br />
+      <footer className="text-center">
+                <p className="text-sm text-gray-500" >This prediction model is under development</p>
+            </footer>
     </div>
   );
 };
