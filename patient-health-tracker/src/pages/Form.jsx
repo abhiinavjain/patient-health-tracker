@@ -30,7 +30,7 @@ const Form = () => {
       },
       body: JSON.stringify({
         ...formData,
-        access_key: process.env.REACT_APP_ACCESS_KEY,
+        access_key: import.meta.env.VITE_ACCESS_KEY,
         subject: "New Submission from Web3Forms"
       })
     });
@@ -136,3 +136,5 @@ const Form = () => {
 };
 
 export default Form;
+
+
