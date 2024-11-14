@@ -30,22 +30,28 @@ const Home = () => {
 
       {/* Features Section */}
       <section className="mt-12 space-y-6">
-      <BackgroundGradient  className="cardb rounded-[22px] sm:p-5 bg-white">
+      
         <div className="max-w-3xl mx-auto grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <BackgroundGradient  className="cardb rounded-[22px] sm:p-6 bg-white">
           <div className="border border-gray-300 rounded-lg p-6 hover:bg-gray-50 transition duration-300 shadow-sm">
             <h2 className="text-xl font-bold mb-2">Track Health History</h2>
             <p>Seamlessly record and access your medical history for easy tracking.</p>
           </div>
+          </BackgroundGradient>
+          <BackgroundGradient  className="cardb rounded-[22px] sm:p-6 bg-white">
           <div className="border border-gray-300 rounded-lg p-6 hover:bg-gray-50 transition duration-300 shadow-sm">
             <h2 className="text-xl font-bold mb-2">Consultation Updates</h2>
             <p>Keep updated with your latest health records from consultations.</p>
           </div>
+          </BackgroundGradient>
+          <BackgroundGradient  className="cardb rounded-[22px] sm:p-6 bg-white">
           <div className="border border-gray-300 rounded-lg p-6 hover:bg-gray-50 transition duration-300 shadow-sm">
             <h2 className="text-xl font-bold mb-2">Secure Data Storage</h2>
             <p>Your health data is encrypted and stored securely for your peace of mind.</p>
           </div>
+          </BackgroundGradient>
         </div>
-        </BackgroundGradient>
+        
       </section>
 
 
