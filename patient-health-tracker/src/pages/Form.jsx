@@ -31,7 +31,7 @@ const Form = () => {
       body: JSON.stringify({
         ...formData,
         access_key: import.meta.env.VITE_ACCESS_KEY,
-        subject: "New Submission from Web3Forms "
+        subject: "Appointment scheduled from Well Path"
       })
     });
 
