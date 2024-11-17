@@ -1,12 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom"; // Assuming you're using react-router for navigation
 import { BackgroundGradient } from "../components/ui/BackgroundGradient";
+import { Cover } from "../components/ui/cover";
 
 const Home = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-8 text-gray-800">
       <header className="text-center mb-12">
-  <h1 className="text-5xl font-extrabold mb-4 text-grey-600">Welcome to Well Path!</h1>
+  <h1 className="text-5xl font-extrabold mb-4 text-grey-600">Welcome to <Cover>Well Path </Cover></h1>
   <p className="text-xl font-semibold text-gray-700">
     Your journey to wellness starts here—track your health history effortlessly!
   </p>
