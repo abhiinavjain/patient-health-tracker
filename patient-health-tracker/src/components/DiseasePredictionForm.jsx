@@ -52,6 +52,7 @@ const DiseasePredictionForm = () => {
             value={formData.age}
             onChange={handleChange}
             className="border p-2 w-full rounded-md"
+             placeholder="Enter your age"
             required
           />
         </div>
