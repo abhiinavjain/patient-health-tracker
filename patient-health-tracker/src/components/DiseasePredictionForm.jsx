@@ -1,6 +1,7 @@
 // src/components/DiseasePredictionForm.jsx
 import React, { useState } from "react";
 import axios from "axios";
+import { FlipWordsDemo } from "./ui/flipwordcomponent";
 
 const DiseasePredictionForm = () => {
   const [formData, setFormData] = useState({
@@ -37,11 +38,10 @@ const DiseasePredictionForm = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 rounded-lg ">
-      <h2 className="text-2xl font-bold mb-4">Disease Prediction</h2>
-      <p className="mb-6 text-gray-600">
-        Discover potential health insights based on your age and symptoms. Our AI-powered prediction system helps identify possible health conditions, providing guidance on the next steps in your wellness journey. Just fill in your information and get a prediction instantly!
-      </p>
+    <div className="max-w-s mx-auto p-6 ">
+  <br />
+      <FlipWordsDemo/>
+  <br /><br />
 
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
@@ -67,12 +67,9 @@ const DiseasePredictionForm = () => {
             required
           />
         </div>
-        <button
-          type="submit"
-          className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-200"
-        >
-          Get Prediction
-        </button>
+        <div class="button-container">
+            <button type="submit" className="  bg-04395E text-white p-2 rounded" >Get Prediction</button>
+        </div>
       </form>
 
       {/* Display the prediction result */}

@@ -122,7 +122,7 @@ export const Cover = ({
           },
         }}
         className={cn(
-          "dark:text-white inline-block text-custom-blue -900 relative z-20 group-hover/cover:text-white transition duration-200",
+          "dark:text-white inline-block text-custom-blue-900 relative z-20 group-hover/cover:text-white transition duration-200",
           className
         )}>
         {children}
