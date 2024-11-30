@@ -3,6 +3,9 @@
 
 This project is a full-stack AI-powered health tracking application designed to assist users in managing and tracking various health data. The system provides an interactive platform for patients and healthcare providers, enabling features like patient registration, health record management, and appointment scheduling, along with automated reminders.
 
+
+https://github.com/user-attachments/assets/43a2161f-065c-497d-a891-afa7831fd6db
+
 ## Key Features
 
 - **User Registration & Profile Management**  
