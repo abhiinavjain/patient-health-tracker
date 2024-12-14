@@ -6,7 +6,9 @@ const Navbar = () => {
     return (
         <nav fixed="top" className="navbar">
             <div className="navLogo">
-                <h1>Well Path</h1>
+                <h1>
+                <Link to="/" className="navlink"><h1>Well Path</h1></Link>
+                </h1>
             </div>
             <ul className="navlinks">
                 <li>
@@ -24,9 +26,7 @@ const Navbar = () => {
                 <li>
                     <Link to={"/predict"} className="navlink"><h2>Disease Prediction</h2></Link>
                 </li>
-                <li>
-                    <Link to={"https://abhiinavjain-portfolio.vercel.app/"} target="blank" className="navlink"><h2>About Developer</h2></Link>
-                </li>
+               
             </ul>
         </nav>
     );
