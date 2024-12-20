@@ -3,10 +3,10 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const cron = require('node-cron');
 const dotenv = require('dotenv');
-const { sendEmail } = require('./mail'); // Import the sendEmail function
+
 const Appointment = require('./models/Appointment'); // Import the Appointment model
 const patientRoutes = require('./routes/patientRoutes'); // Import patient routes
-const { PythonShell } = require('python-shell'); // Import PythonShell for running Python scripts
+
 
 dotenv.config(); // Load environment variables from .env file
 
@@ -31,27 +31,7 @@ app.get('/', (req, res) => {
 app.use('/api', patientRoutes);
 
 // Predict Route with Error Handling
-app.post('/predict', async (req, res) => {
-    try {
-        const options = {
-            scriptPath: './scripts', // Adjust if necessary
-            args: [JSON.stringify(req.body)]
-        };
 
-        PythonShell.run('disease_prediction.py', options, (err, results) => {
-            if (err) {
-                console.error('PythonShellError:', err.message);
-                // Send an error response without shutting down the server
-                return res.status(500).json({ error: "An error occurred with the prediction model." });
-            }
-            const output = JSON.parse(results[0]);
-            res.json(output);
-        });
-    } catch (error) {
-        console.error('Server Error:', error.message);
-        res.status(500).json({ error: "An internal server error occurred." });
-    }
-});
 
 // Appointment Reminder Scheduling
 cron.schedule('* * * * *', async () => {
