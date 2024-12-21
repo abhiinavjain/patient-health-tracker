@@ -1,41 +1,32 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import DiseasePredictionForm from './DiseasePredictionForm';
+import React, { useState } from "react";
+import DiseasePredictionForm from "./DiseasePredictionForm";
+import { predictDisease } from "./api/mlService";
 
 const DiseasePrediction = () => {
-    const [patientData, setPatientData] = useState({
-        age: '',
-        symptoms: '',
-    });
-    const [prediction, setPrediction] = useState(null);
-    const [error, setError] = useState('');
+  const [prediction, setPrediction] = useState(null);
+  const [error, setError] = useState("");
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setPatientData((prevData) => ({
-            ...prevData,
-            [name]: value,
-        }));
-    };
+  const handleFileUpload = async (file) => {
+    try {
+      const result = await predictDisease(file);
+      setPrediction(result.prediction); // Expect { prediction: "Disease Name" }
+    } catch (err) {
+      setError("Prediction failed. Please try again.");
+      console.error(err);
+    }
+  };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setError(''); // Reset error message
-
-        try {
-            const response = await axios.post('http://localhost:5000/api/predict', patientData);
-            setPrediction(response.data.prediction); // Set the prediction result
-        } catch (err) {
-            setError('You might have Asthma'); // Handle errors
-            console.error('Prediction error:', err);
-        }
-    };
-
-    return (
-        <div>
-            <DiseasePredictionForm/>
-        </div>
-    );
+  return (
+    <div className="p-6">
+      <DiseasePredictionForm onFileUpload={handleFileUpload} />
+      {prediction && (
+        <p className="mt-6 text-green-500">
+          <strong>Prediction:</strong> {prediction}
+        </p>
+      )}
+      {error && <p className="mt-6 text-red-500">{error}</p>}
+    </div>
+  );
 };
 
 export default DiseasePrediction;
