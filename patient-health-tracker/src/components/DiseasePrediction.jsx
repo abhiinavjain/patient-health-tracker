@@ -24,7 +24,14 @@ const DiseasePrediction = () => {
           <strong>Prediction:</strong> {prediction}
         </p>
       )}
-      {error && <p className="mt-6 text-red-500">{error}</p>}
+      {error && <p className="text-center mt-6 text-red-500">{error}</p>}
+      <div>
+      <footer className="text-center mt-6">
+        <p className="text-sm text-gray-500">
+          This prediction model is under development
+        </p>
+      </footer>
+      </div>
     </div>
   );
 };

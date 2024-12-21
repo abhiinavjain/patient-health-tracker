@@ -24,11 +24,7 @@ const DiseasePredictionForm = ({ onFileUpload }) => {
           <p className="text-gray-700">{files[0].name}</p>
         </div>
       )}
-      <footer className="text-center mt-6">
-        <p className="text-sm text-gray-500">
-          This prediction model is under development
-        </p>
-      </footer>
+      
     </div>
   );
 };
