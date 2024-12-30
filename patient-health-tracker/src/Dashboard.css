@@ -1,0 +1,98 @@
+/* Dashboard.css */
+.dashboard-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 20px;
+    text-align: center;
+  }
+  
+  .profile-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers the profile image horizontally */
+    margin-bottom: 20px;
+  }
+  
+  .profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+  }
+  
+  .profile-details p {
+    font-size: 18px; /* Increase text size */
+    margin-bottom: 10px;
+  }
+  
+  .edit-input {
+    font-size: 16px; /* Make the input text larger */
+    padding: 8px;
+    margin-top: 10px;
+    width: 80%;
+    text-align: center;
+  }
+  
+  .action-buttons button {
+    margin: 10px 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .edit-button {
+    background-color: #04395E;
+    color: #04395E;
+  }
+  
+  .save-button {
+    background-color: #04395E;
+    color: #04395E;
+  }
+  
+  .cancel-button {
+    background-color: #bf192a;
+    color: #fff;
+  }
+  
+  button:hover {
+    opacity: 0.9;
+  }
+  
+  .remove-photo-button,
+.logout-button {
+  background-color: #ff4d4f;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.remove-photo-button:hover,
+.logout-button:hover {
+  background-color: #e04040;
+}
+
+.edit-button,
+.save-button,
+.cancel-button {
+  background-color: #04395E;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.edit-button:hover,
+.save-button:hover,
+.cancel-button:hover {
+  background-color: #04395E;
+}

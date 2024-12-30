@@ -6,9 +6,9 @@ import PatientRecords from './pages/PatientRecords';
 import Navbar from './pages/NavBar';
 import AddPatient from './pages/AddPatient';
 import DiseasePrediction from './components/DiseasePrediction';
-import Login from './Login';
 import Register from './Register';
 import Dashboard from './Dashboard';
+import LoginPage from './LoginPage';
 
 const AppRouter = () => {
   return (
@@ -20,7 +20,7 @@ const AppRouter = () => {
         <Route path="/records" element={<PatientRecords />} /> 
         <Route path="/add-patient" element={<AddPatient/>}/>
         <Route path='/predict' element={<DiseasePrediction/>}/>
-        <Route path='/login' element={<Login/>}/>
+        <Route path='/login' element={<LoginPage/>}/>
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
