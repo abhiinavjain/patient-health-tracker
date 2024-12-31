@@ -5,8 +5,16 @@ import { useAuth } from './AuthContext';
 const ProtectedRoute = ({ children }) => {
   const { currentUser } = useAuth();
 
-  // Redirect to login page if not logged in
-  return currentUser ? children : <Navigate to="/login" />;
+  // Check if the user is logged in and if their email is verified
+  if (!currentUser) {
+    return <Navigate to="/login" />;
+  }
+
+  if (!currentUser.emailVerified) {
+    return <Navigate to="/verify-email" />;
+  }
+
+  return children;
 };
 
 export default ProtectedRoute;

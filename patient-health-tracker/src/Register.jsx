@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, sendEmailVerification, signOut } from 'firebase/auth';
 import { auth } from './firebase';
 
 const Register = () => {
@@ -18,22 +18,26 @@ const Register = () => {
 
     try {
       // Register the user in Firebase
-      await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
 
-      // Optionally save the additional user data (name, age, phone) in your database
-      console.log({ name, age, phone });
+      // Send email verification
+      await sendEmailVerification(user);
 
-      alert('Registration successful');
-      window.location.href = '/login';
+      // Sign out the user immediately after registration
+      await signOut(auth);
+
+      alert('Registration successful. Please check your email to verify your account.');
+      window.location.href = '/verify-email'; // Redirect to verification page
     } catch (error) {
       alert('Registration failed: ' + error.message);
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen ">
+    <div className="flex items-center justify-center min-h-screen">
       <div className="container mx-auto">
-        <div className="max-w-md mx-auto my-10 p-6 rounded-lg shadow-md ">
+        <div className="max-w-md mx-auto my-10 p-6 rounded-lg shadow-md">
           <h1 className="text-4xl font-bold text-center mb-6 text-[#04395E]">Register</h1>
           <p className="text-xl text-center mb-7 text-[#04395E]">
             Create your account to explore amazing features! 🌟
@@ -90,7 +94,9 @@ const Register = () => {
               Register
             </button>
           </form>
-          <p className="text-center text-lg my-4 text-[#04395E]">Already have an account? <a href="/login" className="underline text-blue-600">Login</a></p>
+          <p className="text-center text-lg my-4 text-[#04395E]">
+            Already have an account? <a href="/login" className="underline text-blue-600">Login</a>
+          </p>
         </div>
       </div>
     </div>

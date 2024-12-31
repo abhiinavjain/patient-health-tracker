@@ -9,6 +9,7 @@ import DiseasePrediction from './components/DiseasePrediction';
 import Register from './Register';
 import Dashboard from './Dashboard';
 import LoginPage from './LoginPage';
+import VerifyEmail from './VerifyEmail'; 
 import { AuthProvider } from './AuthContext';
 import ProtectedRoute from './ProtectedRoute';
 
@@ -21,6 +22,7 @@ const AppRouter = () => {
           {/* Public Routes */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/verify-email" element={<VerifyEmail/>}/>
 
           {/* Protected Routes */}
           <Route
@@ -78,4 +80,3 @@ const AppRouter = () => {
 };
 
 export default AppRouter;
-

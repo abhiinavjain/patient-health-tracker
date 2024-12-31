@@ -8,7 +8,7 @@
     "source": "dataconnect"
   },
   "hosting": {
-    "public": "build",
+    "public": "dist",
     "ignore": [
       "firebase.json",
       "**/.*",
