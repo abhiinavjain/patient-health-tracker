@@ -9,23 +9,73 @@ import DiseasePrediction from './components/DiseasePrediction';
 import Register from './Register';
 import Dashboard from './Dashboard';
 import LoginPage from './LoginPage';
+import { AuthProvider } from './AuthContext';
+import ProtectedRoute from './ProtectedRoute';
 
 const AppRouter = () => {
   return (
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<PatientDashboard />} />
-        <Route path="/follow-ups" element={<FollowUpDashboard />} />
-        <Route path="/records" element={<PatientRecords />} /> 
-        <Route path="/add-patient" element={<AddPatient/>}/>
-        <Route path='/predict' element={<DiseasePrediction/>}/>
-        <Route path='/login' element={<LoginPage/>}/>
-        <Route path="/register" element={<Register />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Navbar />
+        <Routes>
+          {/* Public Routes */}
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<Register />} />
+
+          {/* Protected Routes */}
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <PatientDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/follow-ups"
+            element={
+              <ProtectedRoute>
+                <FollowUpDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/records"
+            element={
+              <ProtectedRoute>
+                <PatientRecords />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/add-patient"
+            element={
+              <ProtectedRoute>
+                <AddPatient />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/predict"
+            element={
+              <ProtectedRoute>
+                <DiseasePrediction />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 };
 
 export default AppRouter;
+
