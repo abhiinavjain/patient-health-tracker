@@ -1,5 +1,7 @@
 "use client";
 
+// named as Disease Prediction form but actually this is upload file component
+
 import React, { useState } from "react";
 import { FileUpload } from "./ui/file-upload";
 import { FlipWordsDemo } from "./ui/flipwordcomponent";
