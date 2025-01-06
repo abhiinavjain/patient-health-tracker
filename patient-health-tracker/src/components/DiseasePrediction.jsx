@@ -3,58 +3,18 @@ import DiseasePredictionForm from "./DiseasePredictionForm";
 import { predictDisease } from "./api/mlService";
 
 const DiseasePrediction = () => {
+  const [prediction, setPrediction] = useState(null);
+  const [error, setError] = useState("");
   const handleFileUpload = async (file) => {
     try {
       const result = await predictDisease(file);
+      setPrediction(result.prediction); // Expect { prediction: "Disease Name" }
       // Open a new pop-up window and display the prediction
-      const newWindow = window.open("", "_blank", "width=400,height=200");
-      newWindow.document.write(
-        `<html>
-          <head>
-            <title>Prediction Result</title>
-            <style>
-              body {
-                font-family: Arial, sans-serif;
-                text-align: center;
-                padding: 20px;
-              }
-              p {
-                font-size: 18px;
-                color: green;
-              }
-            </style>
-          </head>
-          <body>
-            <h2>Prediction Result</h2>
-            <p><strong>${result.prediction}</strong></p>
-          </body>
-        </html>`
-      );
+      
     } catch (err) {
+      setError("Prediction failed. Please try again.");
       // Open a new pop-up window and display the error
-      const newWindow = window.open("", "_blank", "width=400,height=200");
-      newWindow.document.write(
-        `<html>
-          <head>
-            <title>Error</title>
-            <style>
-              body {
-                font-family: Arial, sans-serif;
-                text-align: center;
-                padding: 20px;
-              }
-              p {
-                font-size: 18px;
-                color: red;
-              }
-            </style>
-          </head>
-          <body>
-            <h2>Prediction Error</h2>
-            <p>Prediction failed. Please try again.</p>
-          </body>
-        </html>`
-      );
+      
       console.error(err);
     }
   };
@@ -62,11 +22,19 @@ const DiseasePrediction = () => {
   return (
     <div className="p-6">
       <DiseasePredictionForm onFileUpload={handleFileUpload} />
+      {prediction && (
+        <p className="mt-1 text-center text-green-500">
+          <strong>Your CT Scan shows you might have :{prediction}</strong> 
+        </p>
+      )}
+      {error && <p className="text-center mt-6 text-red-500">{error}</p>}
+      <div>
       <footer className="text-center mt-6">
         <p className="text-sm text-gray-500">
           This prediction model is under development
         </p>
       </footer>
+      </div>
     </div>
   );
 };

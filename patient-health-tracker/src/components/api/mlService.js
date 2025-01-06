@@ -1,7 +1,7 @@
 // src/api/mlService.js
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:5000/api'; // Update as needed
+const API_BASE_URL = 'http://127.0.0.1:5000/api/predict?'; // Update as needed
 
 export const predictDisease = async (file) => {
   const formData = new FormData();
