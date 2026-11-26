@@ -14,12 +14,15 @@ from ..deps import DB, CurrentUser
 from ..models import Patient, User
 from ..schemas import ClinicianOut, PatientSignup, RefreshIn, Token, UserOut
 from ..security import create_tokens, decode_token, hash_password, verify_password
+from ..throttle import LoginThrottle
 from .common import new_mrn
 
 router = APIRouter(tags=["auth"])
 
 # Verifying against a real hash when the user doesn't exist keeps response time similar (no user enumeration).
 _DUMMY_HASH = hash_password("not-a-real-password-0000")
+_settings = get_settings()
+throttle = LoginThrottle(_settings.login_max_failures, _settings.login_window_minutes * 60)
 
 
 def user_out(user: User) -> UserOut:
@@ -50,11 +53,19 @@ def signup(body: PatientSignup, db: DB):
 
 @router.post("/auth/login", response_model=Token)
 def login(form: Annotated[OAuth2PasswordRequestForm, Depends()], db: DB):
-    user = db.scalar(select(User).where(User.email == form.username.lower()))
+    email = form.username.lower()
+    wait = throttle.retry_after(email)
+    if wait:
+        raise HTTPException(status.HTTP_429_TOO_MANY_REQUESTS,
+                            f"Too many failed sign-in attempts. Try again in {max(1, wait // 60)} minute(s).",
+                            headers={"Retry-After": str(wait)})
+    user = db.scalar(select(User).where(User.email == email))
     valid = verify_password(form.password, user.password_hash if user else _DUMMY_HASH)
     if not user or not valid or not user.is_active:
+        throttle.failure(email)  # counted for unknown emails too, so lockouts don't reveal which accounts exist
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Incorrect email or password",
                             headers={"WWW-Authenticate": "Bearer"})
+    throttle.success(email)
     audit.record(db, user, "login", entity="user", entity_id=user.id)
     db.commit()
     return create_tokens(user.id, user.role)

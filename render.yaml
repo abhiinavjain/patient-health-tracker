@@ -1,0 +1,32 @@
+# Render Blueprint for the API (FastAPI + models). The database is Neon Postgres; the web app is on Vercel.
+# See docs/DEPLOY.md. Render prompts for `sync: false` values when the Blueprint is first created.
+services:
+  - type: web
+    name: pht-api
+    runtime: docker
+    plan: free
+    region: singapore
+    dockerfilePath: ./apps/api/Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    autoDeployTrigger: checksPass   # deploy only after GitHub CI is green
+    buildFilter:
+      paths:
+        - apps/api/**
+        - ml/src/**
+        - ml/artifacts/**
+        - ml/pyproject.toml
+        - render.yaml
+    envVars:
+      - key: ENV
+        value: production
+      - key: DATABASE_URL          # Neon connection string (postgres://...?sslmode=require)
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: SEED_ON_START         # seed synthetic demo data once, only if the database is empty
+        value: "true"
+      - key: SEED_PASSWORD         # password for the demo accounts shown on the sign-in page
+        sync: false
+      - key: CORS_ORIGINS          # browsers never call the API directly (the web app proxies), so none needed
+        value: "[]"

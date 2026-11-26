@@ -301,7 +301,15 @@ class Gen:
                                     reason="Follow-up"))
 
 
-def run(n_patients: int, reset: bool, seed: int = 7) -> None:
+def run(n_patients: int, reset: bool, seed: int = 7, if_empty: bool = False) -> None:
+    if if_empty and not reset:
+        from sqlalchemy import inspect, select
+
+        if inspect(engine).has_table("users"):
+            with SessionLocal() as db:
+                if db.scalar(select(User.id).limit(1)) is not None:
+                    print("Database already has users; skipping seed.")
+                    return
     random.seed(seed)
     password = os.environ.get("SEED_PASSWORD", DEFAULT_PASSWORD)
     pw_hash = hash_password(password)
@@ -352,8 +360,9 @@ def main() -> None:
     parser.add_argument("--patients", type=int, default=80)
     parser.add_argument("--reset", action="store_true", help="Drop and recreate all tables first (destroys data)")
     parser.add_argument("--seed", type=int, default=7)
+    parser.add_argument("--if-empty", action="store_true", help="Only seed when there are no users yet (safe on every boot)")
     args = parser.parse_args()
-    run(args.patients, args.reset, args.seed)
+    run(args.patients, args.reset, args.seed, args.if_empty)
 
 
 if __name__ == "__main__":

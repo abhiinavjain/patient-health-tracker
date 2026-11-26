@@ -20,6 +20,15 @@ from app.security import hash_password  # noqa: E402
 PASSWORD = "test-password-123"
 
 
+@pytest.fixture(autouse=True)
+def reset_login_throttle():
+    from app.routers.auth import throttle
+
+    throttle._failures.clear()
+    yield
+    throttle._failures.clear()
+
+
 @pytest.fixture
 def engine():
     eng = create_engine("sqlite://", connect_args={"check_same_thread": False}, poolclass=StaticPool)

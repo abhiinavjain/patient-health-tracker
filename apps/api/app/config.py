@@ -3,6 +3,7 @@ from __future__ import annotations
 import warnings
 from functools import lru_cache
 
+from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 DEV_SECRET = "dev-only-change-me-dev-only-change-me"
@@ -22,6 +23,18 @@ class Settings(BaseSettings):
     healthml_artifacts: str | None = None
     # Allow anyone to self-register as a patient (clinicians/admins are created by an admin).
     allow_patient_signup: bool = True
+    # Failed-login throttling (per account): this many failures within the window -> temporary lockout.
+    login_max_failures: int = 5
+    login_window_minutes: int = 15
+
+    @field_validator("database_url")
+    @classmethod
+    def use_psycopg_driver(cls, v: str) -> str:
+        """Hosted Postgres (Neon, Render, Heroku) hands out postgres:// URLs; SQLAlchemy needs the driver named."""
+        for prefix in ("postgres://", "postgresql://"):
+            if v.startswith(prefix):
+                return "postgresql+psycopg://" + v[len(prefix):]
+        return v
 
 
 @lru_cache

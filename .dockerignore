@@ -3,6 +3,5 @@
 **/.pytest_cache
 ml/data
 mlruns
-legacy
 *.db
 .env

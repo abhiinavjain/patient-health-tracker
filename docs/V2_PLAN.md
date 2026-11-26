@@ -114,9 +114,9 @@ docs/            this plan, model cards, screenshots
 | **2 ✅** | API + DB: schema, migrations, auth/RBAC/consent, CRUD for encounters etc., `/risk` endpoints, audit log, seeded synthetic patients | Done: 44 endpoints, 21 tests, Docker Compose verified on Postgres |
 | **3 ✅** | Note NLP: extraction service + review UI hook + eval set | Done: local extractor, held-out F1 0.76 → 0.96; no external LLM |
 | **4 ✅** | Frontend: patient timeline, trend charts, risk cards with SHAP drivers, clinician worklist, consultation form, admin analytics | Done: Next.js 16 app, httpOnly-cookie auth through the Next.js server, verified in the browser and in Docker |
-| 5 | Polish: CI, README with screenshots/GIF, deploy (Vercel for web; Render/Fly/Railway for API + managed Postgres) | Public demo link with a demo login |
+| **5 ✅** | Polish: CI, README with screenshots/GIF, deploy (Vercel for web; Render/Fly/Railway for API + managed Postgres) | Done: 5-job GitHub CI; Vercel + Render + Neon deploy config. Live link once the accounts are connected |
 
-v1 was removed at the start of phase 2; its source is archived in `legacy/v1-source.tar.gz`.
+v1 was removed at the start of phase 2; its last state is tagged `v1.0` in git.
 
 ## 8. How this reads on a résumé (ML / analytics roles)
 

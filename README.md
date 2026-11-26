@@ -1,5 +1,9 @@
 # Patient Health Tracker v2
 
+[![CI](https://github.com/abhiinavjain/patient-health-tracker/actions/workflows/ci.yml/badge.svg)](https://github.com/abhiinavjain/patient-health-tracker/actions/workflows/ci.yml)
+
+**Live demo:** _coming soon_ (see [docs/DEPLOY.md](docs/DEPLOY.md)) · one-click demo logins for clinician, patient and admin.
+
 A centralised, longitudinal health record with **explainable ML risk predictions**. Every consultation updates the patient's history as structured data: visits, diagnoses, vitals, labs and medications. Three calibrated models turn that history into risk scores that clinicians can act on.
 
 > Portfolio / demo system. It runs on **synthetic patients** and public de-identified training data. It is not a medical device and is not certified for real patient data.
@@ -9,6 +13,12 @@ A centralised, longitudinal health record with **explainable ML risk predictions
 | **Patients** | Own timeline and trends; grant and revoke clinician access; see who viewed their record; lifestyle questionnaire; book appointments |
 | **Clinicians** | Panel of consented patients; record a consultation in one atomic call; risk scores with SHAP drivers; high-risk worklist |
 | **Admins** | Staff accounts, audit log, population analytics, model drift monitoring. They **cannot** open individual charts (least privilege). |
+
+| Clinician worklist | Patient chart |
+|---|---|
+| ![Risk worklist](docs/screenshots/worklist.jpg) | ![Patient chart](docs/screenshots/patient-chart.jpg) |
+| **Explainable risk** | **Sign-in with demo roles** |
+| ![Risk cards with SHAP drivers](docs/screenshots/risk.jpg) | ![Sign in](docs/screenshots/sign-in.jpg) |
 
 ## Architecture
 
@@ -24,7 +34,7 @@ Browser ──▶ Next.js (web)  ── route handlers keep tokens in httpOnly c
 | [`ml/`](ml/README.md) | Training pipeline, model cards, inference package (`healthml`) |
 | [`apps/api/`](apps/api) | FastAPI service: SQLAlchemy models, Alembic migrations, routers, tests, seed generator |
 | [`docs/V2_PLAN.md`](docs/V2_PLAN.md) | Product and architecture plan, phases |
-| `legacy/v1-source.tar.gz` | Archived v1 (React + Express + MongoDB) |
+| Tag [`v1.0`](https://github.com/abhiinavjain/patient-health-tracker/tree/v1.0) | The original v1 (React + Express + MongoDB) |
 
 ## Models
 
@@ -86,7 +96,7 @@ python3 -m venv ml/.venv && ml/.venv/bin/pip install -e "ml[train,dev]"
 # API
 cd apps/api
 python3 -m venv .venv && .venv/bin/pip install -e ../../ml -e ".[dev]"
-.venv/bin/pytest                                     # 31 tests, in-memory SQLite, real model artifacts
+.venv/bin/pytest                                     # 36 tests, in-memory SQLite, real model artifacts
 docker compose up -d db                              # or point DATABASE_URL at your own Postgres
 export DATABASE_URL=postgresql+psycopg://pht:pht@localhost:5433/pht
 .venv/bin/alembic upgrade head && .venv/bin/python -m app.seed
@@ -116,9 +126,10 @@ export DATABASE_URL=postgresql+psycopg://pht:pht@localhost:5433/pht
 - **Audit log.** Append-only, recording every chart view and change. Patients can see who accessed their record.
 - **Secrets and CORS.** The API refuses to start outside dev without `JWT_SECRET`. CORS is restricted to configured origins.
 
+- Failed sign-ins are throttled per account (5 within 15 minutes), counted for unknown emails too, so a lockout reveals nothing about which accounts exist. The web tier sends standard security headers (frame denial, nosniff, referrer policy, HSTS when served over HTTPS).
+
 Known gaps before any real use:
 - Refresh-token revocation.
-- Rate limiting.
 - Encryption at rest.
 - HTTPS termination.
 - Formal compliance review (HIPAA / India DPDP).
@@ -127,6 +138,6 @@ Known gaps before any real use:
 
 - **Phase 3:** ✅ clinical-note NLP, local and offline.
 - **Phase 4:** ✅ Next.js frontend.
-- **Phase 5:** CI and deployment.
+- **Phase 5:** ✅ CI (ML, API, Postgres migrations, web build, full-stack Docker smoke test) and deployment config for Vercel + Render + Neon ([docs/DEPLOY.md](docs/DEPLOY.md)).
 
 See [docs/V2_PLAN.md](docs/V2_PLAN.md).

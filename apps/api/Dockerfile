@@ -21,4 +21,5 @@ ENV HEALTHML_ARTIFACTS=/srv/ml/artifacts
 RUN useradd --create-home app
 USER app
 EXPOSE 8000
-CMD ["sh", "-c", "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port 8000"]
+# PORT is set by hosts like Render; SEED_ON_START=true seeds demo data once (only if the database has no users).
+CMD ["sh", "-c", "alembic upgrade head && if [ \"$SEED_ON_START\" = true ]; then python -m app.seed --if-empty; fi && exec uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000} --proxy-headers"]
