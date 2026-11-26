@@ -25,6 +25,14 @@ OBSERVATIONS: dict[str, tuple[str, str, str]] = {
     "hemoglobin": ("Hemoglobin", "g/dL", "718-7"),
 }
 
+# Physiologically plausible ranges; anything outside is almost certainly a parsing error.
+PLAUSIBLE = {
+    "bp_systolic": (50, 300), "bp_diastolic": (20, 200), "heart_rate": (20, 250), "spo2": (50, 100),
+    "temperature": (30, 45), "weight": (1, 400), "height": (40, 250), "bmi": (8, 90), "hba1c": (3, 20),
+    "glucose_fasting": (20, 1000), "glucose_random": (20, 1500), "glucose_postprandial": (20, 1500), "cholesterol_total": (50, 700), "ldl": (10, 500),
+    "hdl": (5, 200), "triglycerides": (20, 5000), "creatinine": (0.1, 25), "egfr": (1, 200), "hemoglobin": (2, 25),
+}
+
 LAB_CODES = {"hba1c", "glucose_fasting", "glucose_random", "glucose_postprandial", "cholesterol_total", "ldl", "hdl", "triglycerides",
              "creatinine", "egfr", "hemoglobin"}
 

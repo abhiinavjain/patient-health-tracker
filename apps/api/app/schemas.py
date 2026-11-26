@@ -6,7 +6,7 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, EmailStr, Field, field_validator, model_validator
 
-from .catalog import OBSERVATIONS
+from .catalog import OBSERVATIONS, PLAUSIBLE
 
 Role = Literal["patient", "clinician", "admin"]
 Sex = Literal["female", "male", "other"]
@@ -145,6 +145,10 @@ class ObservationIn(BaseModel):
             self.unit = expected
         elif self.unit != expected:
             raise ValueError(f"{self.code} must be recorded in {expected}")
+        lo, hi = PLAUSIBLE.get(self.code, (float("-inf"), float("inf")))
+        if not lo <= self.value <= hi:
+            raise ValueError(f"{OBSERVATIONS[self.code][0]} of {self.value:g} {expected} is outside the plausible range "
+                             f"({lo:g}–{hi:g}); please check the value")
         return self
 
 

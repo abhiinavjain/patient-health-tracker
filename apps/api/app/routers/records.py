@@ -56,6 +56,9 @@ def list_medications(ctx: PatientCtx, status_: str | None = Query(None, alias="s
 @router.post("/patients/{patient_id}/medications", response_model=MedicationOut, status_code=status.HTTP_201_CREATED)
 def add_medication(body: MedicationIn, ctx: PatientCtx):
     ctx.require_clinician()
+    for old in ctx.patient.medications:  # keep a single active entry per drug
+        if old.status == "active" and old.name.strip().lower() == body.name.strip().lower():
+            old.status, old.end_date = "stopped", date.today()
     m = Medication(patient_id=ctx.patient.id, start_date=body.start_date or date.today(), status="active",
                    **body.model_dump(exclude={"start_date"}))
     ctx.db.add(m)

@@ -36,6 +36,10 @@ def record_encounter(body: EncounterIn, ctx: PatientCtx):
     for o in body.observations:
         db.add(Observation(patient_id=p.id, encounter_id=enc.id, code=o.code, value=o.value, unit=o.unit,
                            observed_at=o.observed_at or body.started_at, source="clinician"))
+    new_names = {m.name.strip().lower() for m in body.medications if m.action != "stopped"}
+    for med in p.medications:  # starting/changing a drug that's already active replaces the old entry
+        if med.status == "active" and med.name.strip().lower() in new_names:
+            med.status, med.end_date = "stopped", visit_day
     for m in body.medications:
         db.add(Medication(patient_id=p.id, encounter_id=enc.id, start_date=m.start_date or visit_day,
                           status="stopped" if m.action == "stopped" else "active",

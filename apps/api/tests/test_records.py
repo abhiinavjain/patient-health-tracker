@@ -112,3 +112,15 @@ def test_appointments(granted, doctor, other_doctor, patient):
     assert granted.patch(f"/appointments/{appt['id']}", json={"status": "cancelled"}).json()["status"] == "cancelled"
     # A clinician with access to the patient can update it too.
     assert doctor.patch(f"/appointments/{appt['id']}", json={"status": "completed"}).status_code == 200
+
+
+def test_implausible_values_rejected_and_no_duplicate_active_meds(granted, doctor):
+    pid = granted.patient_id
+    bad = visit(observations=[{"code": "bp_systolic", "value": 352}, {"code": "heart_rate", "value": 802}])
+    r = doctor.post(f"/patients/{pid}/encounters", json=bad)
+    assert r.status_code == 422 and "plausible" in r.text
+    for dose in ("10 mg", "10 mg", "25 mg"):
+        doctor.post(f"/patients/{pid}/encounters", json=visit(conditions=[], observations=[],
+                    medications=[{"name": "Empagliflozin", "dose": dose}]))
+    active = [m for m in granted.get(f"/patients/{pid}/summary").json()["active_medications"] if m["name"].lower() == "empagliflozin"]
+    assert len(active) == 1 and active[0]["dose"] == "25 mg"
