@@ -1,0 +1,50 @@
+# Local stack: Postgres + API + web.
+#   docker compose up -d --build
+#   docker compose run --rm api python -m app.seed      # demo data
+#   open http://localhost:3000        (web)  ·  http://localhost:8000/docs  (API)
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: pht
+      POSTGRES_PASSWORD: pht
+      POSTGRES_DB: pht
+    ports:
+      - "5433:5432"   # 5433 on the host to avoid clashing with a local Postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pht -d pht"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    environment:
+      DATABASE_URL: postgresql+psycopg://pht:pht@db:5432/pht
+      JWT_SECRET: ${JWT_SECRET:-dev-only-change-me-dev-only-change-me}
+      CORS_ORIGINS: '["http://localhost:3000"]'
+      SEED_PASSWORD: ${SEED_PASSWORD:-demo-password-123}
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  web:
+    build:
+      context: apps/web
+    environment:
+      API_URL: http://api:8000
+      # Set to "true" when serving over HTTPS so auth cookies are Secure.
+      COOKIE_SECURE: ${COOKIE_SECURE:-false}
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+
+volumes:
+  pgdata:

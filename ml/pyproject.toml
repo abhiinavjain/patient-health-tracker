@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "healthml"
+version = "2.0.0"
+description = "Risk-prediction models (readmission, diabetes, cardiovascular) for Patient Health Tracker v2"
+requires-python = ">=3.11"
+dependencies = [
+  "numpy",
+  "pandas",
+  "scikit-learn",
+  "lightgbm",
+  "joblib",
+]
+
+[project.optional-dependencies]
+train = ["optuna", "shap", "matplotlib"]
+tracking = ["mlflow"]
+dev = ["pytest"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

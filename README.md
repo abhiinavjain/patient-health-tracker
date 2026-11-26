@@ -1,136 +1,132 @@
+# Patient Health Tracker v2
 
-# AI-Powered Health Tracking System
+A centralised, longitudinal health record with **explainable ML risk predictions**. Every consultation updates the patient's history as structured data: visits, diagnoses, vitals, labs and medications. Three calibrated models turn that history into risk scores that clinicians can act on.
 
-This project is a full-stack AI-powered health tracking application designed to assist users in managing and tracking various health data. The system provides an interactive platform for patients and healthcare providers, enabling features like patient registration, health record management, and appointment scheduling, along with automated reminders.
+> Portfolio / demo system. It runs on **synthetic patients** and public de-identified training data. It is not a medical device and is not certified for real patient data.
 
+| | |
+|---|---|
+| **Patients** | Own timeline and trends; grant and revoke clinician access; see who viewed their record; lifestyle questionnaire; book appointments |
+| **Clinicians** | Panel of consented patients; record a consultation in one atomic call; risk scores with SHAP drivers; high-risk worklist |
+| **Admins** | Staff accounts, audit log, population analytics, model drift monitoring. They **cannot** open individual charts (least privilege). |
 
-https://github.com/user-attachments/assets/43a2161f-065c-497d-a891-afa7831fd6db
+## Architecture
 
-## Key Features
-
-- **User Registration & Profile Management**  
-  Secure registration and login allow users to manage profiles and view health records with ease.
-
-- **Health Record Management**  
-  Patients and healthcare providers can access and update health records, helping track health history and review previous conditions and treatments.
-
-- **Appointment Scheduling**  
-  An intuitive appointment scheduling system allows users to book and manage health appointments seamlessly.
-
-- **Automated Reminders**  
-  Integrated reminders and notifications using `node-cron` and `Nodemailer` for follow-up appointments and other health-related reminders, helping patients stay on top of their health schedules.
-
-- **Secure Data Storage**  
-  User health data is securely stored in MongoDB, using `Mongoose` for efficient and reliable database management.
-
-## Technologies Used
-
-- **Frontend**: React for building responsive and user-friendly interfaces.
-- **Backend**: Node.js and Express.js to manage server-side operations.
-- **Database**: MongoDB with Mongoose for secure and structured data handling.
-- **Notifications**: `node-cron` for scheduling tasks and `Nodemailer` for sending email notifications.
-
-
-## Usage and Installation 
-
-- Download this zip file from github and open it in your code editor 
-- In your Terminal RUN these commands to install all the dependencies
-
-### Project Setup Guide
-
-#### Prerequisites
-1. **Node.js**: Ensure that Node.js is installed (version 14+ recommended).
-2. **MongoDB**: Use MongoDB Atlas (cloud) or have a local MongoDB instance running.
-3. **Heroku CLI** (optional): Only if deploying to Heroku.
-
-#### Step 1: Clone the Repository
-```bash
-git clone <repository-url>
-cd <project-folder>
+```
+Browser ──▶ Next.js (web)  ── route handlers keep tokens in httpOnly cookies, proxy /api/proxy/* ──▶ FastAPI /api/v1 ──▶ PostgreSQL
+                                                                                                     │
+                                                                  healthml (in-process): LightGBM + TreeSHAP; local note NLP
 ```
 
-#### Step 2: Install Backend Dependencies
-1. Navigate to the backend folder:
-   ```bash
-   cd patient-health-tracker-backend
-   ```
-   
-2. Install the backend dependencies:
-   ```bash
-   npm install
-   ```
+| Path | What |
+|---|---|
+| [`apps/web/`](apps/web/README.md) | Next.js 16 frontend: clinician, patient and admin experiences |
+| [`ml/`](ml/README.md) | Training pipeline, model cards, inference package (`healthml`) |
+| [`apps/api/`](apps/api) | FastAPI service: SQLAlchemy models, Alembic migrations, routers, tests, seed generator |
+| [`docs/V2_PLAN.md`](docs/V2_PLAN.md) | Product and architecture plan, phases |
+| `legacy/v1-source.tar.gz` | Archived v1 (React + Express + MongoDB) |
 
-3. Install required backend libraries:
-   ```bash
-   npm install express mongoose dotenv cors axios
-   ```
+## Models
 
-4. (Optional) Install additional libraries for deployment and notifications:
-   - For email notifications:
-     ```bash
-     npm install nodemailer
-     ```
-   - For scheduling tasks:
-     ```bash
-     npm install node-cron
-     ```
+| Model | Data | Test ROC-AUC (95% CI) | Used when |
+|---|---|---|---|
+| 30-day readmission | UCI Diabetes 130-US Hospitals (100k encounters) | 0.687 (0.673–0.701) | Inpatient discharged in the last 30 days |
+| Diabetes screening | CDC BRFSS 2015 (253k) | 0.827 (0.821–0.832) | No diabetes/prediabetes recorded and no HbA1c in the last 3 years |
+| Coronary heart disease | CDC BRFSS 2015 (253k) | 0.851 (0.845–0.857) | No CHD recorded |
 
-5. **Backend Environment Variables**:
-   - Create a `.env` file in the backend root and set up necessary environment variables:
-     ```env
-     PORT=5000
-     MONGODB_URI=<Your MongoDB URI>
-     ```
+The models are calibrated and evaluated with patient-grouped splits and subgroup fairness reports; see the [model cards](ml/README.md#results-held-out-test-set). Each score in the API comes with:
+- its band and percentile;
+- its top SHAP factors in plain language;
+- the inputs that are missing, so the UI can ask for them.
 
-#### Step 3: Install Frontend Dependencies
-1. Go to the frontend directory:
-  - Open a new terminal 
-     ```bash
-      cd patient-health-tracker
-     ```
-   
-2. Install the frontend dependencies:
-   ```bash
-   npm install
-   ```
+A score is withheld when it isn't clinically meaningful, and the response says why ("not applicable" or "insufficient data").
 
-3. Add essential frontend libraries:
-   ```bash
-   npm install axios
-   npm install react react-dom
-   npm install @tabler/icons-react
-   npm install framer-motion
-   ```
+## Frontend
 
-#### Step 4: Install Python and Related Dependencies (for AI Model)
-1. Ensure **Python 3** is installed (Python 3.8 or higher).
-2. Set up a virtual environment for Python dependencies:
-   ```bash
-   python -m venv .venv
-   source .venv/bin/activate  # For macOS/Linux
-   .venv\Scripts\activate     # For Windows
-   ```
+| Role | What they get |
+|---|---|
+| **Clinician** | Risk worklist ranked by band and percentile; patient search; the chart (allergy alerts, problems, meds, out-of-range labs, trend charts with normal ranges, risk cards with SHAP drivers, filterable history with visit details); the consultation workspace (free-text note → extracted draft with evidence quotes → edit → save); schedule; panel analytics |
+| **Patient** | Their own record in plain language; a 9-question health check that unlocks the chronic-disease estimates; appointment booking; grant and revoke doctor access; "who looked at my record" |
+| **Admin** | Population analytics (volume, observed readmissions, risk bands, conditions); model drift (PSI) with test metrics; staff accounts; audit log |
 
-3. Install required Python packages for machine learning:
-   ```bash
-   pip install pandas scikit-learn joblib
-   ```
+It supports light and dark mode, adapts to phone width, and is keyboard- and screen-reader-friendly (labelled controls, `aria-current` navigation, alerts for severe allergies).
 
-4. If you’re using `python-shell` for running Python scripts from Node.js, install it in the backend:
-   ```bash
-   npm install python-shell
-   ```
+## Clinical-note NLP
 
-#### Step 5: Running the Project Locally
-1. Start the **backend server**:
-   ```bash
-   cd patient-health-tracker-backend
-   npm start
-   ```
+`POST /api/v1/patients/{id}/notes/extract` turns a free-text consultation note into a **draft** encounter for the clinician to review and save. The draft contains ICD-10 diagnoses, medications with started/continued/changed/stopped, vitals and labs in canonical units, and the follow-up date.
 
-2. Open a new terminal for the **frontend** and run:
-   ```bash
-   cd patient-health-tracker
-   npm run dev
-   ```
+| | |
+|---|---|
+| Runs locally | No external LLM or API: no patient text leaves the server. Deterministic, about 5 ms per note |
+| How | Rules plus text normalisation (spoken-out numbers, abbreviations, Hinglish, spelling correction) plus an expanded drug/condition lexicon. A trained action classifier ships only if it beats the rules in cross-validation |
+| Safety | Evidence quotes from the original note, ICD-10 and plausibility validation, reconciliation against the chart. Nothing is written without clinician approval. Note text is never stored in the audit log |
+| Evaluation | 64 labelled synthetic notes. On a **held-out set written before development**, F1 went from 0.76 (v1) to **0.96**, with precision 1.00. See [`apps/api/eval/README.md`](apps/api/eval/README.md) |
 
+## Quick start (Docker)
+
+```bash
+docker compose up -d --build                         # Postgres (host 5433) + API (8000) + web (3000)
+docker compose run --rm api python -m app.seed       # 80 synthetic patients + demo accounts
+```
+
+Open **http://localhost:3000** and pick a demo role on the sign-in page. The API docs are at http://localhost:8000/docs. The password for all of them is `SEED_PASSWORD`, default `demo-password-123`.
+
+| Login | Role |
+|---|---|
+| `doctor1@demo.pht` … `doctor5@demo.pht` | Clinicians (internal medicine, cardiology, family medicine, emergency, pulmonology) |
+| `patient1@demo.pht` … `patient3@demo.pht` | Patients |
+| `admin@demo.pht` | Admin |
+
+## Local development
+
+```bash
+# ML package (needed by the API for inference)
+python3 -m venv ml/.venv && ml/.venv/bin/pip install -e "ml[train,dev]"
+
+# API
+cd apps/api
+python3 -m venv .venv && .venv/bin/pip install -e ../../ml -e ".[dev]"
+.venv/bin/pytest                                     # 31 tests, in-memory SQLite, real model artifacts
+docker compose up -d db                              # or point DATABASE_URL at your own Postgres
+export DATABASE_URL=postgresql+psycopg://pht:pht@localhost:5433/pht
+.venv/bin/alembic upgrade head && .venv/bin/python -m app.seed
+.venv/bin/uvicorn app.main:app --reload
+```
+
+## API overview (`/api/v1`)
+
+| Area | Endpoints |
+|---|---|
+| Auth | `POST /auth/signup` (patients), `POST /auth/login`, `POST /auth/refresh`, `GET /auth/me`, `GET /clinicians` |
+| Record | `GET/POST /patients`, `GET/PATCH /patients/{id}`, `/summary`, `/timeline`, `/observations/series?codes=` |
+| Consultations | `POST /patients/{id}/encounters`: one call records the visit plus its diagnoses, vitals/labs and medication starts/stops, then re-scores risk |
+| Note NLP | `POST /patients/{id}/notes/extract`: free-text note → reviewable draft encounter |
+| Problem & med lists | `/conditions`, `/medications` (+ `/stop`), `/allergies`, `/lifestyle`, `/observations` |
+| Consent & audit | `GET/POST/DELETE /patients/{id}/access`, `GET /patients/{id}/audit` |
+| Appointments | `POST /patients/{id}/appointments`, `GET /appointments`, `PATCH /appointments/{id}` |
+| Risk | `GET /patients/{id}/risk`, `POST …/risk/recompute`, `GET …/risk/{model}/history`, `GET /risk/models` |
+| Analytics | `GET /analytics/overview`, `GET /analytics/worklist`, `GET /analytics/models` (PSI drift) |
+| Admin | `POST/GET/PATCH /admin/users`, `GET /admin/audit` |
+
+## Security and privacy design
+
+- **Access control.** Access is checked per patient on every request: patient = self; clinician = active consent grant; admin = no chart access.
+- **Passwords.** Hashed with Argon2id. Login has no user enumeration: an unknown email takes about as long as a wrong password.
+- **Tokens.** Short-lived access JWTs plus refresh JWTs, each typed so one can't stand in for the other. Deactivated users lose access immediately.
+- **Audit log.** Append-only, recording every chart view and change. Patients can see who accessed their record.
+- **Secrets and CORS.** The API refuses to start outside dev without `JWT_SECRET`. CORS is restricted to configured origins.
+
+Known gaps before any real use:
+- Refresh-token revocation.
+- Rate limiting.
+- Encryption at rest.
+- HTTPS termination.
+- Formal compliance review (HIPAA / India DPDP).
+
+## Roadmap
+
+- **Phase 3:** ✅ clinical-note NLP, local and offline.
+- **Phase 4:** ✅ Next.js frontend.
+- **Phase 5:** CI and deployment.
+
+See [docs/V2_PLAN.md](docs/V2_PLAN.md).

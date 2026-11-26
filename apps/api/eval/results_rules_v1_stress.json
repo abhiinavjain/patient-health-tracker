@@ -1,0 +1,154 @@
+{
+  "n_notes": 12,
+  "entities": {
+    "conditions": {
+      "precision": 0.8571428571428571,
+      "recall": 0.5454545454545454,
+      "f1": 0.6666666666666665,
+      "tp": 6,
+      "fp": 1,
+      "fn": 5
+    },
+    "medications": {
+      "precision": 1.0,
+      "recall": 0.4,
+      "f1": 0.5714285714285715,
+      "tp": 10,
+      "fp": 0,
+      "fn": 15
+    },
+    "observations": {
+      "precision": 1.0,
+      "recall": 0.8,
+      "f1": 0.888888888888889,
+      "tp": 12,
+      "fp": 0,
+      "fn": 3
+    },
+    "all": {
+      "precision": 0.9655172413793104,
+      "recall": 0.5490196078431373,
+      "f1": 0.7000000000000002,
+      "tp": 28,
+      "fp": 1,
+      "fn": 23
+    }
+  },
+  "attributes": {
+    "action": {
+      "accuracy": 0.5,
+      "n": 10
+    },
+    "dose": {
+      "accuracy": 1.0,
+      "n": 6
+    },
+    "frequency": {
+      "accuracy": 0.8,
+      "n": 5
+    },
+    "follow_up": {
+      "accuracy": 0.6666666666666666,
+      "n": 12
+    }
+  },
+  "latency_s": {
+    "mean": 0.0015161252498122242,
+    "max": 0.0065544649987714365
+  },
+  "per_note": [
+    {
+      "id": "s01",
+      "errors": [
+        "action metformin: started != dose_increased",
+        "observation missed: bp_systolic=140",
+        "observation missed: bp_diastolic=90",
+        "follow-up: None != 14"
+      ]
+    },
+    {
+      "id": "s02",
+      "errors": [
+        "condition missed: ['N40']",
+        "condition missed: ['D50']",
+        "condition extra: D64.9 Anaemia",
+        "medication missed: tamsulosin",
+        "medication missed: finasteride",
+        "medication missed: ferrous sulphate"
+      ]
+    },
+    {
+      "id": "s03",
+      "errors": [
+        "medication missed: metformin",
+        "medication missed: glimepiride",
+        "medication missed: pregabalin"
+      ]
+    },
+    {
+      "id": "s04",
+      "errors": [
+        "action telmisartan: started != dose_increased",
+        "follow-up: None != 14"
+      ]
+    },
+    {
+      "id": "s05",
+      "errors": [
+        "condition missed: ['I48']",
+        "observation missed: spo2=92",
+        "follow-up: None != 1"
+      ]
+    },
+    {
+      "id": "s06",
+      "errors": [
+        "medication missed: isoniazid",
+        "medication missed: rifampicin",
+        "medication missed: pyrazinamide",
+        "medication missed: ethambutol",
+        "medication missed: pyridoxine"
+      ]
+    },
+    {
+      "id": "s07",
+      "errors": [
+        "condition missed: ['E87']",
+        "condition missed: ['E53', 'D51']",
+        "medication missed: potassium chloride",
+        "medication missed: methylcobalamin"
+      ]
+    },
+    {
+      "id": "s08",
+      "errors": []
+    },
+    {
+      "id": "s09",
+      "errors": [
+        "action budesonide-formoterol: started != dose_decreased"
+      ]
+    },
+    {
+      "id": "s10",
+      "errors": [
+        "medication missed: labetalol"
+      ]
+    },
+    {
+      "id": "s11",
+      "errors": [
+        "action insulin glargine: continued != started",
+        "action insulin lispro: continued != started",
+        "frequency insulin lispro: None != with_meals",
+        "follow-up: None != 10"
+      ]
+    },
+    {
+      "id": "s12",
+      "errors": [
+        "medication missed: enoxaparin"
+      ]
+    }
+  ]
+}

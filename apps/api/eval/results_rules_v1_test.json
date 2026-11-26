@@ -1,0 +1,157 @@
+{
+  "n_notes": 20,
+  "entities": {
+    "conditions": {
+      "precision": 0.9666666666666667,
+      "recall": 1.0,
+      "f1": 0.983050847457627,
+      "tp": 29,
+      "fp": 1,
+      "fn": 0
+    },
+    "medications": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 43,
+      "fp": 0,
+      "fn": 0
+    },
+    "observations": {
+      "precision": 1.0,
+      "recall": 0.9772727272727273,
+      "f1": 0.9885057471264368,
+      "tp": 43,
+      "fp": 0,
+      "fn": 1
+    },
+    "all": {
+      "precision": 0.9913793103448276,
+      "recall": 0.9913793103448276,
+      "f1": 0.9913793103448276,
+      "tp": 115,
+      "fp": 1,
+      "fn": 1
+    }
+  },
+  "attributes": {
+    "action": {
+      "accuracy": 0.9069767441860465,
+      "n": 43
+    },
+    "dose": {
+      "accuracy": 0.9705882352941176,
+      "n": 34
+    },
+    "frequency": {
+      "accuracy": 0.972972972972973,
+      "n": 37
+    },
+    "follow_up": {
+      "accuracy": 1.0,
+      "n": 20
+    }
+  },
+  "latency_s": {
+    "mean": 0.0015974814001310732,
+    "max": 0.006242198000109056
+  },
+  "per_note": [
+    {
+      "id": "t01",
+      "errors": []
+    },
+    {
+      "id": "t02",
+      "errors": [
+        "condition extra: F32.A Depression"
+      ]
+    },
+    {
+      "id": "t03",
+      "errors": [
+        "action paracetamol: continued != started"
+      ]
+    },
+    {
+      "id": "t04",
+      "errors": [
+        "action enalapril: started != stopped"
+      ]
+    },
+    {
+      "id": "t05",
+      "errors": []
+    },
+    {
+      "id": "t06",
+      "errors": []
+    },
+    {
+      "id": "t07",
+      "errors": []
+    },
+    {
+      "id": "t08",
+      "errors": [
+        "action insulin aspart: started != continued"
+      ]
+    },
+    {
+      "id": "t09",
+      "errors": []
+    },
+    {
+      "id": "t10",
+      "errors": []
+    },
+    {
+      "id": "t11",
+      "errors": [
+        "dose levodopa-carbidopa: '100/25 mcg' != '100/25 mg'"
+      ]
+    },
+    {
+      "id": "t12",
+      "errors": []
+    },
+    {
+      "id": "t13",
+      "errors": [
+        "observation missed: weight=74"
+      ]
+    },
+    {
+      "id": "t14",
+      "errors": [
+        "action clobetasol: dose_decreased != started"
+      ]
+    },
+    {
+      "id": "t15",
+      "errors": [
+        "frequency telmisartan: None != once_daily"
+      ]
+    },
+    {
+      "id": "t16",
+      "errors": []
+    },
+    {
+      "id": "t17",
+      "errors": []
+    },
+    {
+      "id": "t18",
+      "errors": []
+    },
+    {
+      "id": "t19",
+      "errors": []
+    },
+    {
+      "id": "t20",
+      "errors": []
+    }
+  ]
+}

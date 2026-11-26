@@ -1,0 +1,184 @@
+{
+  "n_notes": 16,
+  "entities": {
+    "conditions": {
+      "precision": 1.0,
+      "recall": 0.26666666666666666,
+      "f1": 0.4210526315789474,
+      "tp": 4,
+      "fp": 0,
+      "fn": 11
+    },
+    "medications": {
+      "precision": 0.9629629629629629,
+      "recall": 0.65,
+      "f1": 0.7761194029850746,
+      "tp": 26,
+      "fp": 1,
+      "fn": 14
+    },
+    "observations": {
+      "precision": 1.0,
+      "recall": 0.7916666666666666,
+      "f1": 0.8837209302325582,
+      "tp": 19,
+      "fp": 0,
+      "fn": 5
+    },
+    "all": {
+      "precision": 0.98,
+      "recall": 0.620253164556962,
+      "f1": 0.7596899224806202,
+      "tp": 49,
+      "fp": 1,
+      "fn": 30
+    }
+  },
+  "attributes": {
+    "action": {
+      "accuracy": 0.8076923076923077,
+      "n": 26
+    },
+    "dose": {
+      "accuracy": 0.8888888888888888,
+      "n": 18
+    },
+    "frequency": {
+      "accuracy": 0.9285714285714286,
+      "n": 14
+    },
+    "follow_up": {
+      "accuracy": 0.75,
+      "n": 16
+    }
+  },
+  "latency_s": {
+    "mean": 0.0014491574997919088,
+    "max": 0.006312866000371287
+  },
+  "per_note": [
+    {
+      "id": "h01",
+      "errors": [
+        "condition missed: ['E11']",
+        "condition missed: ['I10']",
+        "dose vildagliptin: None != '50 mg'",
+        "frequency vildagliptin: None != once_daily"
+      ]
+    },
+    {
+      "id": "h02",
+      "errors": [
+        "action salbutamol: started != dose_increased",
+        "observation missed: spo2=94"
+      ]
+    },
+    {
+      "id": "h03",
+      "errors": [
+        "condition missed: ['K26', 'K27', 'K92']",
+        "medication missed: clarithromycin",
+        "observation missed: hemoglobin=9.6"
+      ]
+    },
+    {
+      "id": "h04",
+      "errors": [
+        "medication missed: levothyroxine",
+        "follow-up: None != 56"
+      ]
+    },
+    {
+      "id": "h05",
+      "errors": [
+        "condition missed: ['K30']"
+      ]
+    },
+    {
+      "id": "h06",
+      "errors": [
+        "observation missed: bp_systolic=160",
+        "observation missed: bp_diastolic=100"
+      ]
+    },
+    {
+      "id": "h07",
+      "errors": [
+        "action warfarin: started != stopped",
+        "observation missed: creatinine=1.1",
+        "follow-up: None != 90"
+      ]
+    },
+    {
+      "id": "h08",
+      "errors": [
+        "condition missed: ['J30']",
+        "medication missed: fluticasone",
+        "medication missed: cetirizine"
+      ]
+    },
+    {
+      "id": "h09",
+      "errors": [
+        "condition missed: ['E11', 'E13', 'E14']",
+        "action insulin: continued != dose_decreased",
+        "dose insulin: None != '10 units'",
+        "follow-up: None != 14"
+      ]
+    },
+    {
+      "id": "h10",
+      "errors": [
+        "condition missed: ['J45']",
+        "medication missed: ipratropium",
+        "medication missed: hydrocortisone",
+        "action prednisolone: continued != started",
+        "action budesonide-formoterol: continued != started"
+      ]
+    },
+    {
+      "id": "h11",
+      "errors": [
+        "condition missed: ['M81', 'M80']",
+        "medication missed: calcium-vitamin d",
+        "medication missed: cholecalciferol",
+        "medication extra: vitamin d (started)"
+      ]
+    },
+    {
+      "id": "h12",
+      "errors": [
+        "follow-up: None != 3"
+      ]
+    },
+    {
+      "id": "h13",
+      "errors": [
+        "condition missed: ['I25', 'Z95']"
+      ]
+    },
+    {
+      "id": "h14",
+      "errors": [
+        "condition missed: ['B35']",
+        "medication missed: luliconazole",
+        "medication missed: fluconazole"
+      ]
+    },
+    {
+      "id": "h15",
+      "errors": [
+        "condition missed: ['K76', 'K75']",
+        "medication missed: vitamin e"
+      ]
+    },
+    {
+      "id": "h16",
+      "errors": [
+        "medication missed: donepezil",
+        "medication missed: quetiapine",
+        "medication missed: diphenhydramine"
+      ]
+    }
+  ]
+}

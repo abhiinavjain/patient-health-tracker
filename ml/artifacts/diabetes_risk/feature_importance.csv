@@ -1,0 +1,18 @@
+feature,mean_abs_shap,label
+general_health,0.663059662703231,Self-rated general health (1 excellent – 5 poor)
+age_years,0.44239063219896735,Age
+bmi,0.4131280175383998,BMI
+high_bp,0.4085484170895306,High blood pressure
+high_chol,0.3002879895997111,High cholesterol
+sex_male,0.11632088148448144,Sex (male)
+chol_check_5y,0.08432338386545903,Cholesterol checked in past 5 years
+poor_mental_health_days,0.07062583258745002,Poor mental-health days (past 30)
+heavy_alcohol,0.06797221977540795,Heavy alcohol use
+heart_disease,0.06449537090006005,Coronary heart disease / heart attack
+difficulty_walking,0.061049174608702,Difficulty walking or climbing stairs
+phys_activity,0.04250850215775234,Physically active in past 30 days
+fruits_daily,0.03883915691213376,Eats fruit daily
+poor_physical_health_days,0.03265264049110926,Poor physical-health days (past 30)
+veggies_daily,0.02570821054595035,Eats vegetables daily
+stroke,0.02313744253720131,History of stroke
+smoker,0.022450330719152957,Smoked 100+ cigarettes in lifetime

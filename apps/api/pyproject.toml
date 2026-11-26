@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pht-api"
+version = "2.0.0"
+description = "Patient Health Tracker v2 API"
+requires-python = ">=3.11"
+dependencies = [
+  "fastapi>=0.115",
+  "uvicorn[standard]",
+  "sqlalchemy>=2.0",
+  "psycopg[binary]>=3.1",
+  "alembic>=1.13",
+  "pydantic-settings>=2",
+  "email-validator",
+  "pyjwt>=2.8",
+  "pwdlib[argon2]",
+  "python-multipart",
+  "healthml",  # ../../ml — install it first (pip install -e ../../ml)
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "httpx"]
+
+[tool.setuptools.packages.find]
+include = ["app*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+filterwarnings = [
+  "ignore:Using the built-in development JWT secret",
+  "ignore:Using `httpx` with `starlette.testclient` is deprecated",
+]

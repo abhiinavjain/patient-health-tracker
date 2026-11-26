@@ -1,0 +1,26 @@
+feature,mean_abs_shap,label
+number_inpatient,0.21847433404443203,Inpatient stays in past year
+discharge_to,0.2118231506330303,Discharged to
+prior_encounters,0.11479856682719267,Earlier admissions on record
+diag_1_group,0.08302473612494694,Primary diagnosis
+time_in_hospital,0.051311722746582654,Days in hospital
+number_diagnoses,0.05087352225925514,Number of recorded diagnoses
+age_years,0.049957526489136414,Age
+n_diabetes_meds,0.04860247388833444,Diabetes medications in use
+specialty,0.04784268751943005,Admitting specialty
+diag_2_group,0.044348816583845596,Secondary diagnosis
+num_medications,0.04163574509070532,Distinct medications this stay
+diag_3_group,0.035227736953191265,Additional diagnosis
+number_emergency,0.03101182208046344,Emergency visits in past year
+insulin,0.026636369133550726,Insulin
+num_lab_procedures,0.022407542720382628,Lab tests this stay
+sex,0.01877409876961287,Sex
+a1c_result,0.018690662180977854,HbA1c result
+admission_type,0.01598869888781699,Admission type
+admission_source,0.012066263785671747,Admitted from
+num_procedures,0.009347215914050744,Procedures this stay
+number_outpatient,0.008187416893498703,Outpatient visits in past year
+on_diabetes_med,0.005307962684813065,On diabetes medication
+n_med_changes,0.004892635180379608,Diabetes medication dose changes
+med_change,0.004660844294977685,Any diabetes medication changed
+max_glucose,0.003665812133519711,Max serum glucose

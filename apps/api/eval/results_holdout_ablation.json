@@ -1,0 +1,645 @@
+{
+  "v1 rules (baseline)": {
+    "n_notes": 16,
+    "entities": {
+      "conditions": {
+        "precision": 1.0,
+        "recall": 0.26666666666666666,
+        "f1": 0.4210526315789474,
+        "tp": 4,
+        "fp": 0,
+        "fn": 11
+      },
+      "medications": {
+        "precision": 0.9629629629629629,
+        "recall": 0.65,
+        "f1": 0.7761194029850746,
+        "tp": 26,
+        "fp": 1,
+        "fn": 14
+      },
+      "observations": {
+        "precision": 1.0,
+        "recall": 0.7916666666666666,
+        "f1": 0.8837209302325582,
+        "tp": 19,
+        "fp": 0,
+        "fn": 5
+      },
+      "all": {
+        "precision": 0.98,
+        "recall": 0.620253164556962,
+        "f1": 0.7596899224806202,
+        "tp": 49,
+        "fp": 1,
+        "fn": 30
+      }
+    },
+    "attributes": {
+      "action": {
+        "accuracy": 0.8076923076923077,
+        "n": 26
+      },
+      "dose": {
+        "accuracy": 0.8888888888888888,
+        "n": 18
+      },
+      "frequency": {
+        "accuracy": 0.9285714285714286,
+        "n": 14
+      },
+      "follow_up": {
+        "accuracy": 0.75,
+        "n": 16
+      }
+    },
+    "latency_s": {
+      "mean": 0.002717781000683317,
+      "max": 0.011303551000310108
+    },
+    "per_note": [
+      {
+        "id": "h01",
+        "errors": [
+          "condition missed: ['E11']",
+          "condition missed: ['I10']",
+          "dose vildagliptin: None != '50 mg'",
+          "frequency vildagliptin: None != once_daily"
+        ]
+      },
+      {
+        "id": "h02",
+        "errors": [
+          "action salbutamol: started != dose_increased",
+          "observation missed: spo2=94"
+        ]
+      },
+      {
+        "id": "h03",
+        "errors": [
+          "condition missed: ['K26', 'K27', 'K92']",
+          "medication missed: clarithromycin",
+          "observation missed: hemoglobin=9.6"
+        ]
+      },
+      {
+        "id": "h04",
+        "errors": [
+          "medication missed: levothyroxine",
+          "follow-up: None != 56"
+        ]
+      },
+      {
+        "id": "h05",
+        "errors": [
+          "condition missed: ['K30']"
+        ]
+      },
+      {
+        "id": "h06",
+        "errors": [
+          "observation missed: bp_systolic=160",
+          "observation missed: bp_diastolic=100"
+        ]
+      },
+      {
+        "id": "h07",
+        "errors": [
+          "action warfarin: started != stopped",
+          "observation missed: creatinine=1.1",
+          "follow-up: None != 90"
+        ]
+      },
+      {
+        "id": "h08",
+        "errors": [
+          "condition missed: ['J30']",
+          "medication missed: fluticasone",
+          "medication missed: cetirizine"
+        ]
+      },
+      {
+        "id": "h09",
+        "errors": [
+          "condition missed: ['E11', 'E13', 'E14']",
+          "action insulin: continued != dose_decreased",
+          "dose insulin: None != '10 units'",
+          "follow-up: None != 14"
+        ]
+      },
+      {
+        "id": "h10",
+        "errors": [
+          "condition missed: ['J45']",
+          "medication missed: ipratropium",
+          "medication missed: hydrocortisone",
+          "action prednisolone: continued != started",
+          "action budesonide-formoterol: continued != started"
+        ]
+      },
+      {
+        "id": "h11",
+        "errors": [
+          "condition missed: ['M81', 'M80']",
+          "medication missed: calcium-vitamin d",
+          "medication missed: cholecalciferol",
+          "medication extra: vitamin d (started)"
+        ]
+      },
+      {
+        "id": "h12",
+        "errors": [
+          "follow-up: None != 3"
+        ]
+      },
+      {
+        "id": "h13",
+        "errors": [
+          "condition missed: ['I25', 'Z95']"
+        ]
+      },
+      {
+        "id": "h14",
+        "errors": [
+          "condition missed: ['B35']",
+          "medication missed: luliconazole",
+          "medication missed: fluconazole"
+        ]
+      },
+      {
+        "id": "h15",
+        "errors": [
+          "condition missed: ['K76', 'K75']",
+          "medication missed: vitamin e"
+        ]
+      },
+      {
+        "id": "h16",
+        "errors": [
+          "medication missed: donepezil",
+          "medication missed: quetiapine",
+          "medication missed: diphenhydramine"
+        ]
+      }
+    ]
+  },
+  "+ text normalisation": {
+    "n_notes": 16,
+    "entities": {
+      "conditions": {
+        "precision": 1.0,
+        "recall": 0.4,
+        "f1": 0.5714285714285715,
+        "tp": 6,
+        "fp": 0,
+        "fn": 9
+      },
+      "medications": {
+        "precision": 1.0,
+        "recall": 0.65,
+        "f1": 0.787878787878788,
+        "tp": 26,
+        "fp": 0,
+        "fn": 14
+      },
+      "observations": {
+        "precision": 1.0,
+        "recall": 0.9166666666666666,
+        "f1": 0.9565217391304348,
+        "tp": 22,
+        "fp": 0,
+        "fn": 2
+      },
+      "all": {
+        "precision": 1.0,
+        "recall": 0.6835443037974683,
+        "f1": 0.8120300751879699,
+        "tp": 54,
+        "fp": 0,
+        "fn": 25
+      }
+    },
+    "attributes": {
+      "action": {
+        "accuracy": 0.8846153846153846,
+        "n": 26
+      },
+      "dose": {
+        "accuracy": 0.8888888888888888,
+        "n": 18
+      },
+      "frequency": {
+        "accuracy": 0.9285714285714286,
+        "n": 14
+      },
+      "follow_up": {
+        "accuracy": 1.0,
+        "n": 16
+      }
+    },
+    "latency_s": {
+      "mean": 0.003632256874880113,
+      "max": 0.00554982800167636
+    },
+    "per_note": [
+      {
+        "id": "h01",
+        "errors": [
+          "dose vildagliptin: None != '50 mg'",
+          "frequency vildagliptin: None != once_daily"
+        ]
+      },
+      {
+        "id": "h02",
+        "errors": []
+      },
+      {
+        "id": "h03",
+        "errors": [
+          "condition missed: ['K26', 'K27', 'K92']",
+          "medication missed: clarithromycin",
+          "observation missed: hemoglobin=9.6"
+        ]
+      },
+      {
+        "id": "h04",
+        "errors": [
+          "medication missed: levothyroxine"
+        ]
+      },
+      {
+        "id": "h05",
+        "errors": [
+          "condition missed: ['K30']"
+        ]
+      },
+      {
+        "id": "h06",
+        "errors": []
+      },
+      {
+        "id": "h07",
+        "errors": [
+          "observation missed: creatinine=1.1"
+        ]
+      },
+      {
+        "id": "h08",
+        "errors": [
+          "condition missed: ['J30']",
+          "medication missed: fluticasone",
+          "medication missed: cetirizine"
+        ]
+      },
+      {
+        "id": "h09",
+        "errors": [
+          "condition missed: ['E11', 'E13', 'E14']",
+          "action insulin: continued != dose_decreased",
+          "dose insulin: None != '10 units'"
+        ]
+      },
+      {
+        "id": "h10",
+        "errors": [
+          "condition missed: ['J45']",
+          "medication missed: ipratropium",
+          "medication missed: hydrocortisone",
+          "action prednisolone: continued != started",
+          "action budesonide-formoterol: continued != started"
+        ]
+      },
+      {
+        "id": "h11",
+        "errors": [
+          "condition missed: ['M81', 'M80']",
+          "medication missed: calcium-vitamin d",
+          "medication missed: cholecalciferol"
+        ]
+      },
+      {
+        "id": "h12",
+        "errors": []
+      },
+      {
+        "id": "h13",
+        "errors": [
+          "condition missed: ['I25', 'Z95']"
+        ]
+      },
+      {
+        "id": "h14",
+        "errors": [
+          "condition missed: ['B35']",
+          "medication missed: luliconazole",
+          "medication missed: fluconazole"
+        ]
+      },
+      {
+        "id": "h15",
+        "errors": [
+          "condition missed: ['K76', 'K75']",
+          "medication missed: vitamin e"
+        ]
+      },
+      {
+        "id": "h16",
+        "errors": [
+          "medication missed: donepezil",
+          "medication missed: quetiapine",
+          "medication missed: diphenhydramine"
+        ]
+      }
+    ]
+  },
+  "+ expanded lexicon (shipped)": {
+    "n_notes": 16,
+    "entities": {
+      "conditions": {
+        "precision": 1.0,
+        "recall": 0.8,
+        "f1": 0.888888888888889,
+        "tp": 12,
+        "fp": 0,
+        "fn": 3
+      },
+      "medications": {
+        "precision": 1.0,
+        "recall": 0.975,
+        "f1": 0.9873417721518987,
+        "tp": 39,
+        "fp": 0,
+        "fn": 1
+      },
+      "observations": {
+        "precision": 1.0,
+        "recall": 0.9166666666666666,
+        "f1": 0.9565217391304348,
+        "tp": 22,
+        "fp": 0,
+        "fn": 2
+      },
+      "all": {
+        "precision": 1.0,
+        "recall": 0.9240506329113924,
+        "f1": 0.9605263157894737,
+        "tp": 73,
+        "fp": 0,
+        "fn": 6
+      }
+    },
+    "attributes": {
+      "action": {
+        "accuracy": 0.8974358974358975,
+        "n": 39
+      },
+      "dose": {
+        "accuracy": 0.8888888888888888,
+        "n": 27
+      },
+      "frequency": {
+        "accuracy": 0.9565217391304348,
+        "n": 23
+      },
+      "follow_up": {
+        "accuracy": 1.0,
+        "n": 16
+      }
+    },
+    "latency_s": {
+      "mean": 0.0053440314998169924,
+      "max": 0.007365126999502536
+    },
+    "per_note": [
+      {
+        "id": "h01",
+        "errors": []
+      },
+      {
+        "id": "h02",
+        "errors": []
+      },
+      {
+        "id": "h03",
+        "errors": [
+          "observation missed: hemoglobin=9.6"
+        ]
+      },
+      {
+        "id": "h04",
+        "errors": [
+          "action levothyroxine: continued != dose_decreased",
+          "dose levothyroxine: '75 mcg' != '50 mcg'",
+          "frequency levothyroxine: None != once_daily"
+        ]
+      },
+      {
+        "id": "h05",
+        "errors": []
+      },
+      {
+        "id": "h06",
+        "errors": []
+      },
+      {
+        "id": "h07",
+        "errors": [
+          "observation missed: creatinine=1.1"
+        ]
+      },
+      {
+        "id": "h08",
+        "errors": []
+      },
+      {
+        "id": "h09",
+        "errors": [
+          "condition missed: ['E11', 'E13', 'E14']",
+          "action insulin: continued != dose_decreased",
+          "dose insulin: None != '10 units'"
+        ]
+      },
+      {
+        "id": "h10",
+        "errors": [
+          "condition missed: ['J45']",
+          "action prednisolone: continued != started",
+          "action budesonide-formoterol: continued != started"
+        ]
+      },
+      {
+        "id": "h11",
+        "errors": [
+          "medication missed: calcium-vitamin d",
+          "dose cholecalciferol: '60 mg' != '60000 units'"
+        ]
+      },
+      {
+        "id": "h12",
+        "errors": []
+      },
+      {
+        "id": "h13",
+        "errors": [
+          "condition missed: ['I25', 'Z95']"
+        ]
+      },
+      {
+        "id": "h14",
+        "errors": []
+      },
+      {
+        "id": "h15",
+        "errors": []
+      },
+      {
+        "id": "h16",
+        "errors": []
+      }
+    ]
+  },
+  "+ action classifier (hybrid, not shipped)": {
+    "n_notes": 16,
+    "entities": {
+      "conditions": {
+        "precision": 1.0,
+        "recall": 0.8,
+        "f1": 0.888888888888889,
+        "tp": 12,
+        "fp": 0,
+        "fn": 3
+      },
+      "medications": {
+        "precision": 1.0,
+        "recall": 0.975,
+        "f1": 0.9873417721518987,
+        "tp": 39,
+        "fp": 0,
+        "fn": 1
+      },
+      "observations": {
+        "precision": 1.0,
+        "recall": 0.9166666666666666,
+        "f1": 0.9565217391304348,
+        "tp": 22,
+        "fp": 0,
+        "fn": 2
+      },
+      "all": {
+        "precision": 1.0,
+        "recall": 0.9240506329113924,
+        "f1": 0.9605263157894737,
+        "tp": 73,
+        "fp": 0,
+        "fn": 6
+      }
+    },
+    "attributes": {
+      "action": {
+        "accuracy": 0.9487179487179487,
+        "n": 39
+      },
+      "dose": {
+        "accuracy": 0.8888888888888888,
+        "n": 27
+      },
+      "frequency": {
+        "accuracy": 0.9565217391304348,
+        "n": 23
+      },
+      "follow_up": {
+        "accuracy": 1.0,
+        "n": 16
+      }
+    },
+    "latency_s": {
+      "mean": 0.007440015187512472,
+      "max": 0.02368528700026218
+    },
+    "per_note": [
+      {
+        "id": "h01",
+        "errors": []
+      },
+      {
+        "id": "h02",
+        "errors": []
+      },
+      {
+        "id": "h03",
+        "errors": [
+          "observation missed: hemoglobin=9.6"
+        ]
+      },
+      {
+        "id": "h04",
+        "errors": [
+          "action levothyroxine: continued != dose_decreased",
+          "dose levothyroxine: '75 mcg' != '50 mcg'",
+          "frequency levothyroxine: None != once_daily"
+        ]
+      },
+      {
+        "id": "h05",
+        "errors": []
+      },
+      {
+        "id": "h06",
+        "errors": []
+      },
+      {
+        "id": "h07",
+        "errors": [
+          "observation missed: creatinine=1.1"
+        ]
+      },
+      {
+        "id": "h08",
+        "errors": []
+      },
+      {
+        "id": "h09",
+        "errors": [
+          "condition missed: ['E11', 'E13', 'E14']",
+          "action insulin: continued != dose_decreased",
+          "dose insulin: None != '10 units'"
+        ]
+      },
+      {
+        "id": "h10",
+        "errors": [
+          "condition missed: ['J45']"
+        ]
+      },
+      {
+        "id": "h11",
+        "errors": [
+          "medication missed: calcium-vitamin d",
+          "dose cholecalciferol: '60 mg' != '60000 units'"
+        ]
+      },
+      {
+        "id": "h12",
+        "errors": []
+      },
+      {
+        "id": "h13",
+        "errors": [
+          "condition missed: ['I25', 'Z95']"
+        ]
+      },
+      {
+        "id": "h14",
+        "errors": []
+      },
+      {
+        "id": "h15",
+        "errors": []
+      },
+      {
+        "id": "h16",
+        "errors": []
+      }
+    ]
+  }
+}

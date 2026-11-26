@@ -1,0 +1,17 @@
+{
+  "rules": {
+    "action_accuracy": 0.9514563106796117,
+    "n": 103,
+    "entity_f1": 1.0
+  },
+  "hybrid": {
+    "action_accuracy": 0.9223300970873787,
+    "n": 103,
+    "entity_f1": 1.0
+  },
+  "model": {
+    "action_accuracy": 0.8543689320388349,
+    "n": 103,
+    "entity_f1": 1.0
+  }
+}
