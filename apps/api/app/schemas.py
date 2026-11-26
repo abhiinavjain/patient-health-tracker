@@ -257,6 +257,7 @@ class EncounterOut(ORM):
     conditions: list[ConditionOut]
     observations: list[ObservationOut]
     medications: list[MedicationOut]
+    alert: AlertOut | None = None
 
 
 class EncounterSummary(ORM):
@@ -376,6 +377,37 @@ class RiskResult(BaseModel):
     missing_inputs: list[str] = []
     computed_at: datetime | None = None
     encounter_id: uuid.UUID | None = None
+
+
+class AlertReason(BaseModel):
+    code: str
+    label: str
+    value: float
+    unit: str
+    severity: Literal["watch", "urgent", "critical"]
+    rule: str
+
+
+class AlertOut(ORM):
+    id: uuid.UUID
+    patient_id: uuid.UUID
+    encounter_id: uuid.UUID | None
+    level: Literal["watch", "urgent", "critical"]
+    news2: int | None
+    reasons: list[AlertReason]
+    source: str
+    created_at: datetime
+    reviewed_at: datetime | None
+    review_note: str | None
+    released_to_patient: bool
+    patient_seen_at: datetime | None
+    reviewer_name: str | None = None
+    patient_name: str | None = None
+
+
+class AlertReview(BaseModel):
+    release_to_patient: bool = False
+    note: str | None = Field(default=None, max_length=500)
 
 
 class RiskHistoryPoint(BaseModel):

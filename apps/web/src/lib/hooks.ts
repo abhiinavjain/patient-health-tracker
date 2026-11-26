@@ -3,7 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { api } from "./api";
 import type {
-  Allergy, Appointment, AuditEntry, Clinician, Condition, Encounter, EncounterSummary, Grant, Lifestyle, Medication,
+  AlertItem, Allergy, Appointment, AuditEntry, Clinician, Condition, Encounter, EncounterSummary, Grant, Lifestyle, Medication,
   ModelMonitor, ObservationSeries, Overview, Patient, PatientListItem, PatientSummary, RiskModelInfo, RiskResult,
   TimelineEvent, User, WorklistRow,
 } from "./types";
@@ -80,3 +80,12 @@ export const useAdminUsers = () => useQuery({ queryKey: ["admin-users"], queryFn
 
 export const useAdminAudit = (action?: string) =>
   useQuery({ queryKey: ["admin-audit", action], queryFn: () => api<AuditEntry[]>(`/admin/audit?limit=300${action ? `&action=${action}` : ""}`) });
+
+export const usePatientAlerts = (id: string, openOnly = false) =>
+  useQuery({
+    queryKey: [...keys.patient(id), "alerts", openOnly],
+    queryFn: () => api<AlertItem[]>(`/patients/${id}/alerts${openOnly ? "?open_only=true" : ""}`),
+    enabled: !!id,
+  });
+
+export const useOpenAlerts = () => useQuery({ queryKey: ["open-alerts"], queryFn: () => api<AlertItem[]>("/alerts") });

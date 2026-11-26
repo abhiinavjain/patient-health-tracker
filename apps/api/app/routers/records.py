@@ -15,6 +15,7 @@ from ..schemas import (
     AllergyIn, AllergyOut, ConditionOut, ConditionUpdate, LifestyleIn, LifestyleOut, MedicationIn, MedicationOut,
     ObservationIn, ObservationOut,
 )
+from ..services.alerting import raise_alert
 from ..services.risk import score_and_store
 
 router = APIRouter(tags=["records"])
@@ -126,5 +127,7 @@ def add_observation(body: ObservationIn, ctx: PatientCtx):
     ctx.db.add(o)
     ctx.db.flush()
     audit.record(ctx.db, ctx.user, "create", patient_id=ctx.patient.id, entity="observation", entity_id=o.id)
+    ctx.db.refresh(ctx.patient)
+    raise_alert(ctx.db, ctx.patient, ctx.user)
     ctx.db.commit()
     return o

@@ -7,6 +7,7 @@ OBSERVATIONS: dict[str, tuple[str, str, str]] = {
     "bp_systolic": ("Systolic blood pressure", "mmHg", "8480-6"),
     "bp_diastolic": ("Diastolic blood pressure", "mmHg", "8462-4"),
     "heart_rate": ("Heart rate", "bpm", "8867-4"),
+    "respiratory_rate": ("Respiratory rate", "breaths/min", "9279-1"),
     "spo2": ("Oxygen saturation", "%", "59408-5"),
     "temperature": ("Body temperature", "°C", "8310-5"),
     "weight": ("Body weight", "kg", "29463-7"),
@@ -27,7 +28,7 @@ OBSERVATIONS: dict[str, tuple[str, str, str]] = {
 
 # Physiologically plausible ranges; anything outside is almost certainly a parsing error.
 PLAUSIBLE = {
-    "bp_systolic": (50, 300), "bp_diastolic": (20, 200), "heart_rate": (20, 250), "spo2": (50, 100),
+    "bp_systolic": (50, 300), "bp_diastolic": (20, 200), "heart_rate": (20, 250), "respiratory_rate": (4, 70), "spo2": (50, 100),
     "temperature": (30, 45), "weight": (1, 400), "height": (40, 250), "bmi": (8, 90), "hba1c": (3, 20),
     "glucose_fasting": (20, 1000), "glucose_random": (20, 1500), "glucose_postprandial": (20, 1500), "cholesterol_total": (50, 700), "ldl": (10, 500),
     "hdl": (5, 200), "triglycerides": (20, 5000), "creatinine": (0.1, 25), "egfr": (1, 200), "hemoglobin": (2, 25),

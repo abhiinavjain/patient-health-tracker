@@ -61,6 +61,23 @@ A score is withheld when it isn't clinically meaningful, and the response says w
 
 It supports light and dark mode, adapts to phone width, and is keyboard- and screen-reader-friendly (labelled controls, `aria-current` navigation, alerts for severe allergies).
 
+## Acute alerts: "is this patient at risk right now?"
+
+Every saved visit and every patient-entered reading is checked against **validated clinical rules**, not an ML model ([`apps/api/app/services/alerts.py`](apps/api/app/services/alerts.py)):
+- the NEWS2 early-warning score;
+- hypoglycaemia levels from the ADA standards;
+- the ACC/AHA hypertensive-crisis threshold;
+- critical lab values.
+
+Each alert is **critical**, **urgent** or **watch**, and lists the exact readings and rules behind it.
+
+| Who | Sees |
+|---|---|
+| Clinician | A toast right after saving; the alert on the chart; a "Needs attention now" list on the worklist. They then **mark it reviewed** or **review & notify the patient**, with a note. |
+| Patient | Only alerts a clinician has released, with level-specific advice. Critical alerts say "go to the nearest emergency department or call 108" and include a call button. |
+
+The long-term ML risk scores (readmission, diabetes, heart disease) answer a different question, and stay as they are.
+
 ## Clinical-note NLP
 
 `POST /api/v1/patients/{id}/notes/extract` turns a free-text consultation note into a **draft** encounter for the clinician to review and save. The draft contains ICD-10 diagnoses, medications with started/continued/changed/stopped, vitals and labs in canonical units, and the follow-up date.

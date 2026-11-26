@@ -9,6 +9,7 @@ from .. import audit
 from ..deps import PatientCtx
 from ..models import Condition, Encounter, Medication, Observation
 from ..schemas import EncounterIn, EncounterOut, EncounterSummary
+from ..services.alerting import raise_alert
 from ..services.risk import score_and_store
 from .patients import _encounter_summary
 
@@ -59,13 +60,18 @@ def record_encounter(body: EncounterIn, ctx: PatientCtx):
                          "medications": len(body.medications)})
     db.flush()
     db.refresh(p)
+    alert = raise_alert(db, p, ctx.user, enc.id)
     try:
         score_and_store(db, p)
     except Exception:  # scoring must never block saving the clinical record
         log.exception("risk scoring failed for patient %s", p.id)
     db.commit()
     db.refresh(enc)
-    return enc
+    out = EncounterOut.model_validate(enc)
+    if alert is not None:
+        from .alerts import alert_out
+        out.alert = alert_out(alert)
+    return out
 
 
 @router.get("/patients/{patient_id}/encounters", response_model=list[EncounterSummary])

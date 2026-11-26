@@ -228,6 +228,31 @@ class RiskScore(Base):
     __table_args__ = (Index("ix_risk_patient_model_time", "patient_id", "model", "computed_at"),)
 
 
+class Alert(Base):
+    """Acute-risk alert raised when new readings cross clinical thresholds (see services/alerts.py).
+
+    Patients see an alert only after a clinician has reviewed it and released it to them.
+    """
+
+    __tablename__ = "alerts"
+    id: Mapped[uuid.UUID] = mapped_column(Uuid, primary_key=True, default=uuid.uuid4)
+    patient_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("patients.id", ondelete="CASCADE"), index=True)
+    encounter_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("encounters.id", ondelete="SET NULL"))
+    level: Mapped[str] = mapped_column(_enum("watch", "urgent", "critical", name="alert_level"))
+    news2: Mapped[int | None] = mapped_column(Integer)
+    reasons: Mapped[list] = mapped_column(JSON, default=list)
+    source: Mapped[str] = mapped_column(String(16))  # clinician | patient
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow, index=True)
+    created_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id"))
+    reviewed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    reviewed_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id"))
+    review_note: Mapped[str | None] = mapped_column(Text)
+    released_to_patient: Mapped[bool] = mapped_column(Boolean, default=False)
+    patient_seen_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+    reviewer: Mapped[User | None] = relationship(foreign_keys=[reviewed_by])
+
+
 class AuditLog(Base):
     """Append-only record of who viewed or changed which patient's data."""
 

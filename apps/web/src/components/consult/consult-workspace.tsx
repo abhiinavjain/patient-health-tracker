@@ -20,7 +20,7 @@ import { ErrorState } from "@/components/states";
 import { api } from "@/lib/api";
 import { OBSERVATIONS, titleCase } from "@/lib/format";
 import { keys, useSummary } from "@/lib/hooks";
-import type { ConditionIn, ExtractionResult, MedicationIn, ObservationIn, ReviewItem } from "@/lib/types";
+import type { ConditionIn, Encounter, ExtractionResult, MedicationIn, ObservationIn, ReviewItem } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 const ACTIONS: MedicationIn["action"][] = ["started", "continued", "dose_increased", "dose_decreased"];
@@ -108,7 +108,7 @@ export function ConsultWorkspace({ patientId }: { patientId: string }) {
   });
 
   const save = useMutation({
-    mutationFn: () => api(`/patients/${patientId}/encounters`, {
+    mutationFn: () => api<Encounter>(`/patients/${patientId}/encounters`, {
       method: "POST",
       body: {
         type,
@@ -124,11 +124,17 @@ export function ConsultWorkspace({ patientId }: { patientId: string }) {
         follow_up_date: followUp || null,
       },
     }),
-    onSuccess: () => {
+    onSuccess: (enc) => {
       qc.invalidateQueries({ queryKey: keys.patient(patientId) });
       qc.invalidateQueries({ queryKey: ["worklist"] });
       qc.invalidateQueries({ queryKey: ["patients"] });
-      toast.success("Consultation saved — history and risk scores updated");
+      qc.invalidateQueries({ queryKey: ["open-alerts"] });
+      const a = enc.alert;
+      if (a?.level === "critical")
+        toast.error(`Critical: ${a.reasons[0]?.rule ?? "readings need immediate action"}. Review the alert on the chart.`, { duration: 12000 });
+      else if (a?.level === "urgent")
+        toast.warning(`Urgent: ${a.reasons[0]?.rule ?? "readings need review today"}. Review the alert on the chart.`, { duration: 10000 });
+      else toast.success(a ? "Consultation saved — minor deviations flagged for review" : "Consultation saved — readings within safe limits");
       router.push(`/patients/${patientId}`);
     },
     onError: (e) => toast.error(e.message),

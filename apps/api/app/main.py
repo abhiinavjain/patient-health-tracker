@@ -7,7 +7,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from .config import get_settings
-from .routers import access, admin, analytics, appointments, auth, encounters, notes, patients, records, risk
+from .routers import access, admin, alerts, analytics, appointments, auth, encounters, notes, patients, records, risk
 from .services.risk import available_models
 
 log = logging.getLogger("pht")
@@ -36,7 +36,7 @@ def create_app() -> FastAPI:
         allow_methods=["GET", "POST", "PATCH", "DELETE"],
         allow_headers=["Authorization", "Content-Type"],
     )
-    for r in (auth, patients, encounters, notes, records, access, appointments, risk, analytics, admin):
+    for r in (auth, patients, encounters, alerts, notes, records, access, appointments, risk, analytics, admin):
         app.include_router(r.router, prefix="/api/v1")
 
     @app.get("/health", tags=["meta"])

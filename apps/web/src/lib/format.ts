@@ -44,6 +44,7 @@ export const OBSERVATIONS: Record<string, { label: string; unit: string; group: 
   bp_systolic: { label: "Systolic BP", unit: "mmHg", group: "vital" },
   bp_diastolic: { label: "Diastolic BP", unit: "mmHg", group: "vital" },
   heart_rate: { label: "Heart rate", unit: "bpm", group: "vital" },
+  respiratory_rate: { label: "Respiratory rate", unit: "breaths/min", group: "vital" },
   spo2: { label: "SpO₂", unit: "%", group: "vital" },
   temperature: { label: "Temperature", unit: "°C", group: "vital" },
   weight: { label: "Weight", unit: "kg", group: "vital" },
@@ -64,7 +65,7 @@ export const OBSERVATIONS: Record<string, { label: string; unit: string; group: 
 
 // Reference ranges for highlighting out-of-range values (adult, simplified).
 export const REFERENCE: Record<string, [number, number]> = {
-  bp_systolic: [90, 139], bp_diastolic: [60, 89], heart_rate: [50, 100], spo2: [94, 100], temperature: [36.1, 37.5],
+  bp_systolic: [90, 139], bp_diastolic: [60, 89], heart_rate: [50, 100], respiratory_rate: [12, 20], spo2: [94, 100], temperature: [36.1, 37.5],
   bmi: [18.5, 24.9], hba1c: [4, 5.6], glucose_fasting: [70, 99], glucose_postprandial: [70, 139], cholesterol_total: [0, 199], ldl: [0, 129],
   hdl: [40, 200], triglycerides: [0, 149], creatinine: [0.6, 1.3], egfr: [60, 200], hemoglobin: [12, 17.5],
 };

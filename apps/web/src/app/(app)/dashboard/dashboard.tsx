@@ -10,7 +10,8 @@ import { Button } from "@/components/ui/button";
 import { EmptyState, ErrorState, LoadingRows, PageHeader, RoleGate } from "@/components/states";
 import { RiskBadge } from "@/components/risk/risk-card";
 import { formatDateTime, MODEL_SHORT, pct, relative } from "@/lib/format";
-import { useAppointments, useMe, usePatients, useWorklist } from "@/lib/hooks";
+import { useAppointments, useMe, useOpenAlerts, usePatients, useWorklist } from "@/lib/hooks";
+import { AlertBadge } from "@/components/alerts/alerts";
 
 function Stat({ icon: Icon, label, value, hint }: { icon: typeof Users; label: string; value: React.ReactNode; hint?: string }) {
   return (
@@ -40,6 +41,7 @@ function Inner() {
   const router = useRouter();
   const { data: me } = useMe();
   const worklist = useWorklist();
+  const alerts = useOpenAlerts();
   const patients = usePatients();
   const appts = useAppointments(7);
   const highCount = useMemo(() => new Set((worklist.data ?? []).filter((w) => w.band === "high").map((w) => w.patient_id)).size, [worklist.data]);
@@ -58,6 +60,29 @@ function Inner() {
         <Stat icon={AlertTriangle} label="High-risk patients" value={worklist.isPending ? "—" : highCount} hint="any model" />
         <Stat icon={CalendarClock} label="Appointments today" value={appts.isPending ? "—" : today.length} hint={`${appts.data?.length ?? 0} this week`} />
       </div>
+
+      {(alerts.data ?? []).length > 0 && (
+        <Card className="mb-4 border-risk-high/40">
+          <CardHeader>
+            <CardTitle className="text-base">Needs attention now</CardTitle>
+            <CardDescription>New readings that crossed clinical thresholds (NEWS2, critical values). Review each one.</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-1">
+            {alerts.data!.slice(0, 10).map((a) => (
+              <Link key={a.id} href={`/patients/${a.patient_id}`} className="-mx-2 flex items-center gap-3 rounded-md px-2 py-2 hover:bg-accent">
+                <AlertBadge level={a.level} />
+                <span className="min-w-0 flex-1">
+                  <span className="block text-sm font-medium">{a.patient_name}</span>
+                  <span className="block truncate text-xs text-muted-foreground">
+                    {a.reasons.map((r) => `${r.label} ${r.value}`).join(" · ")}{a.source === "patient" ? " · home reading" : ""}
+                  </span>
+                </span>
+                <span className="shrink-0 text-xs text-muted-foreground">{relative(a.created_at)}</span>
+              </Link>
+            ))}
+          </CardContent>
+        </Card>
+      )}
 
       <div className="grid gap-4 xl:grid-cols-[1fr_22rem]">
         <Card>

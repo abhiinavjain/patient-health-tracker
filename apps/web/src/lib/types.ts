@@ -105,6 +105,34 @@ export interface Appointment {
   status: "scheduled" | "completed" | "cancelled" | "no_show";
 }
 
+export type AlertLevel = "watch" | "urgent" | "critical";
+
+export interface AlertReason {
+  code: string;
+  label: string;
+  value: number;
+  unit: string;
+  severity: AlertLevel;
+  rule: string;
+}
+
+export interface AlertItem {
+  id: string;
+  patient_id: string;
+  encounter_id: string | null;
+  level: AlertLevel;
+  news2: number | null;
+  reasons: AlertReason[];
+  source: "clinician" | "patient";
+  created_at: string;
+  reviewed_at: string | null;
+  review_note: string | null;
+  released_to_patient: boolean;
+  patient_seen_at: string | null;
+  reviewer_name: string | null;
+  patient_name: string | null;
+}
+
 export interface EncounterSummary {
   id: string;
   type: string;
@@ -131,6 +159,7 @@ export interface Encounter {
   conditions: Condition[];
   observations: Observation[];
   medications: Medication[];
+  alert: AlertItem | null;
 }
 
 export interface PatientSummary {

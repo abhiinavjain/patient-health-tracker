@@ -8,6 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ErrorState } from "@/components/states";
 import { RiskCard } from "@/components/risk/risk-card";
+import { ClinicianAlerts, PatientAlerts } from "@/components/alerts/alerts";
 import { LatestVitals, PatientHeader, ProblemsAndMeds, UpcomingAppointments } from "./summary";
 import { Timeline } from "./timeline";
 import { TrendChart } from "./trend-chart";
@@ -84,6 +85,7 @@ export function PatientRecord({
   return (
     <>
       <PatientHeader summary={summary} actions={actions} />
+      {audience === "clinician" ? <ClinicianAlerts patientId={patientId} /> : <PatientAlerts patientId={patientId} />}
       <Tabs defaultValue="overview" className="gap-6">
         <TabsList className="h-auto max-w-full flex-wrap justify-start">
           <TabsTrigger value="overview">Overview</TabsTrigger>
