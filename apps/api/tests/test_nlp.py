@@ -168,3 +168,24 @@ def test_extract_reconciles_and_draft_can_be_saved(granted, doctor):
     assert set(meds) == {"amlodipine", "sitagliptin"} and meds["amlodipine"]["dose"] == "10 mg"
     log = granted.get(f"/patients/{pid}/audit").json()
     assert any(e["action"] == "extract" for e in log)
+
+
+def test_field_report_post_meal_sugar():
+    """Reported from real use: misspelled post-meal sugar was missed entirely."""
+    ex = LocalExtractor(action_model=False).extract(
+        "Suger after lunch 200, increased thrist, frequent urination, advice hb1ac test  reccomend to cardiologist")
+    assert [(o.code, o.value) for o in ex.observations] == [("glucose_postprandial", 200.0)]
+    assert not ex.conditions and not ex.medications  # symptoms aren't diagnoses; an ordered test isn't a result
+
+
+@pytest.mark.parametrize("note,expected", [
+    ("PPBS 248 mg/dl, FBS 162", {("glucose_postprandial", 248.0), ("glucose_fasting", 162.0)}),
+    ("sugar 210 after food. Fasting sugar 140", {("glucose_postprandial", 210.0), ("glucose_fasting", 140.0)}),
+    ("Blood sugar 7.8 mmol/L", {("glucose_random", 140.4)}),
+    ("GRBS 312 in ER", {("glucose_random", 312.0)}),
+    ("sugar 5 days back was high", set()),
+    ("hb1ac 8.9%", {("hba1c", 8.9)}),
+])
+def test_glucose_variants(note, expected):
+    ex = LocalExtractor(action_model=False).extract(note)
+    assert {(o.code, round(o.value, 1)) for o in ex.observations} == expected

@@ -15,6 +15,7 @@ OBSERVATIONS: dict[str, tuple[str, str, str]] = {
     "hba1c": ("HbA1c", "%", "4548-4"),
     "glucose_fasting": ("Fasting glucose", "mg/dL", "1558-6"),
     "glucose_random": ("Random glucose", "mg/dL", "2339-0"),
+    "glucose_postprandial": ("Post-meal glucose (2 h)", "mg/dL", "1521-4"),
     "cholesterol_total": ("Total cholesterol", "mg/dL", "2093-3"),
     "ldl": ("LDL cholesterol", "mg/dL", "18262-6"),
     "hdl": ("HDL cholesterol", "mg/dL", "2085-9"),
@@ -24,7 +25,7 @@ OBSERVATIONS: dict[str, tuple[str, str, str]] = {
     "hemoglobin": ("Hemoglobin", "g/dL", "718-7"),
 }
 
-LAB_CODES = {"hba1c", "glucose_fasting", "glucose_random", "cholesterol_total", "ldl", "hdl", "triglycerides",
+LAB_CODES = {"hba1c", "glucose_fasting", "glucose_random", "glucose_postprandial", "cholesterol_total", "ldl", "hdl", "triglycerides",
              "creatinine", "egfr", "hemoglobin"}
 
 # Generic names of glucose-lowering drugs (incl. those in the readmission training data).

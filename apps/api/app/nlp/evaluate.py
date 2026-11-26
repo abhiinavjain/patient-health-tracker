@@ -217,7 +217,7 @@ def get_extractor(method: str):
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--method", choices=["local", "rules-v1"], default="local")
-    ap.add_argument("--split", choices=["dev", "test", "stress", "holdout", "all"], default="dev")
+    ap.add_argument("--split", choices=["dev", "test", "stress", "holdout", "field", "all"], default="dev")
     ap.add_argument("--errors", action="store_true", help="print per-note errors")
     ap.add_argument("--out", type=Path, help="write full results JSON here")
     args = ap.parse_args()

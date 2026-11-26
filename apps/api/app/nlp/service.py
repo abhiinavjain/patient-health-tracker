@@ -27,7 +27,7 @@ log = logging.getLogger(__name__)
 PLAUSIBLE = {
     "bp_systolic": (50, 300), "bp_diastolic": (20, 200), "heart_rate": (20, 250), "spo2": (50, 100),
     "temperature": (30, 45), "weight": (1, 400), "height": (40, 250), "bmi": (8, 90), "hba1c": (3, 20),
-    "glucose_fasting": (20, 1000), "glucose_random": (20, 1500), "cholesterol_total": (50, 700), "ldl": (10, 500),
+    "glucose_fasting": (20, 1000), "glucose_random": (20, 1500), "glucose_postprandial": (20, 1500), "cholesterol_total": (50, 700), "ldl": (10, 500),
     "hdl": (5, 200), "triglycerides": (20, 5000), "creatinine": (0.1, 25), "egfr": (1, 200), "hemoglobin": (2, 25),
 }
 ICD10 = re.compile(r"^[A-Z][0-9][0-9A-Z](\.?[0-9A-Z]{1,4})?$")

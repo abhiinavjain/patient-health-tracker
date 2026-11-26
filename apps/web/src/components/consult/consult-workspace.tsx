@@ -99,7 +99,10 @@ export function ConsultWorkspace({ patientId }: { patientId: string }) {
       setStopIds((s) => [...new Set([...s, ...r.draft.stop_medication_ids])]);
       if (r.draft.follow_up_date) setFollowUp(r.draft.follow_up_date);
       const added = r.review.filter((i) => i.status === "new").length;
-      toast.success(added ? `${added} item${added > 1 ? "s" : ""} added to the draft — please review` : "Nothing new found in the note");
+      const known = r.review.filter((i) => i.status === "already_recorded").length;
+      if (added) toast.success(`${added} item${added > 1 ? "s" : ""} added to the draft — please review`);
+      else if (known) toast.info("Everything recognised in the note is already on the chart");
+      else toast.warning("No diagnoses, medications or measurements recognised — add them to the draft manually");
     },
     onError: (e) => toast.error(e.message),
   });
@@ -220,6 +223,15 @@ export function ConsultWorkspace({ patientId }: { patientId: string }) {
               {extraction?.warnings.map((w) => (
                 <Alert key={w}><AlertDescription className="text-sm">{w}</AlertDescription></Alert>
               ))}
+              {extraction && extraction.review.length === 0 && (
+                <Alert>
+                  <AlertDescription className="text-sm">
+                    Nothing in this note matched a diagnosis, medication, measurement or follow-up the extractor knows.
+                    Symptoms, ordered tests and referrals aren’t extracted. Use “Add” in the draft for anything that should be
+                    recorded; the note itself is saved with the visit.
+                  </AlertDescription>
+                </Alert>
+              )}
               {extraction && <ReviewList items={extraction.review} />}
             </CardContent>
           </Card>

@@ -107,7 +107,7 @@ def readmission_features(patient: Patient, now: datetime | None = None) -> Built
                   if o.encounter_id == enc.id or start <= _aware(o.observed_at) <= discharged]
     labs = [o for o in window_obs if o.code in LAB_CODES]
     a1c = [o.value for o in window_obs if o.code == "hba1c"]
-    glucose = [o.value for o in window_obs if o.code in ("glucose_fasting", "glucose_random")]
+    glucose = [o.value for o in window_obs if o.code in ("glucose_fasting", "glucose_random", "glucose_postprandial")]
 
     active_meds = [m for m in patient.medications
                    if m.encounter_id == enc.id or (m.status == "active" and (m.start_date is None or m.start_date <= discharged.date()))]

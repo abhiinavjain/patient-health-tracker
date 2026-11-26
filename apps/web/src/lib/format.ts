@@ -52,6 +52,7 @@ export const OBSERVATIONS: Record<string, { label: string; unit: string; group: 
   hba1c: { label: "HbA1c", unit: "%", group: "lab" },
   glucose_fasting: { label: "Fasting glucose", unit: "mg/dL", group: "lab" },
   glucose_random: { label: "Random glucose", unit: "mg/dL", group: "lab" },
+  glucose_postprandial: { label: "Post-meal glucose (2 h)", unit: "mg/dL", group: "lab" },
   cholesterol_total: { label: "Total cholesterol", unit: "mg/dL", group: "lab" },
   ldl: { label: "LDL", unit: "mg/dL", group: "lab" },
   hdl: { label: "HDL", unit: "mg/dL", group: "lab" },
@@ -64,7 +65,7 @@ export const OBSERVATIONS: Record<string, { label: string; unit: string; group: 
 // Reference ranges for highlighting out-of-range values (adult, simplified).
 export const REFERENCE: Record<string, [number, number]> = {
   bp_systolic: [90, 139], bp_diastolic: [60, 89], heart_rate: [50, 100], spo2: [94, 100], temperature: [36.1, 37.5],
-  bmi: [18.5, 24.9], hba1c: [4, 5.6], glucose_fasting: [70, 99], cholesterol_total: [0, 199], ldl: [0, 129],
+  bmi: [18.5, 24.9], hba1c: [4, 5.6], glucose_fasting: [70, 99], glucose_postprandial: [70, 139], cholesterol_total: [0, 199], ldl: [0, 129],
   hdl: [40, 200], triglycerides: [0, 149], creatinine: [0.6, 1.3], egfr: [60, 200], hemoglobin: [12, 17.5],
 };
 

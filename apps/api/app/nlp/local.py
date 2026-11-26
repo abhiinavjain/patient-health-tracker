@@ -73,6 +73,8 @@ def words_to_numbers(text: str) -> str:
 
 
 NORMALISE: list[tuple[str, str]] = [
+    (r"\b(?:s[hu]?ug[ae]r|shugar|sugr)(s?)\b", r"sugar\1"),
+    (r"\bh?b\s?1\s?a\s?c\b|\bhba\s?1\s?c\b|\bhbaic\b|\bglyc(?:at)?ed\s+h(?:a)?emoglobin\b", "HbA1c"),
     (r"\b(?:o2|oxygen)\s*sat(?:uration)?s?\b|\bsats\b|\bsat(?:uration)?\s+(?=\d)", "SpO2 "),
     (r"\ba-?fib\b|\batrial fib\b(?!rillation)", "atrial fibrillation"),
     (r"\btmrw?\b|\btom+or+ow\b", "tomorrow"),
@@ -134,6 +136,17 @@ _EXTRA_ACT = [
 _CHANGED = re.compile(r"\bchanged\b", re.I)
 PRIO = {**PRIORITY, "_changed": 2}
 _FREQ_V2 = _FREQ + [(re.compile(r"\b(?:before|after|with)\s+(?:each\s+)?(?:meals?|food)\b|\bac\b", re.I), "with_meals")]
+_GLU_NUM = r"(\d{1,3}(?:\.\d+)?)\s*(mg/?dl|mmol/?l)?"
+_MEAL = r"(?:after|post)\s+(?:lunch|meals?|food|breakfast|dinner|eating|khana)"
+_GLUCOSE_PATTERNS = [
+    # 2-hour post-meal sugar: "PPBS 210", "PP sugar 210", "post-prandial 210", "sugar after lunch 200", "sugar 200 after food"
+    ("glucose_postprandial", re.compile(
+        r"\b(?:ppbs|ppbg|pp\s?(?:blood\s)?(?:sugar|glucose)|post[- ]?prandial(?:\s(?:blood\s)?(?:sugar|glucose))?|"
+        r"2\s?h(?:r|our)?s?\s?(?:pp|post[- ]?meal)|(?:blood\s)?(?:sugar|glucose)\s" + _MEAL + r")\b[\s:=-]*" + _GLU_NUM, re.I)),
+    ("glucose_postprandial", re.compile(r"\b(?:blood\s)?(?:sugar|glucose)\s*[:=-]?\s*" + _GLU_NUM + r"\s*" + _MEAL, re.I)),
+    # Unqualified "sugar 180" / "BSL 180" / "CBG 180" = a random reading.
+    ("glucose_random", re.compile(r"\b(?:blood\s)?(?:sugar|glucose|bsl|cbg|grbs)\b\s*[:=-]?\s*" + _GLU_NUM, re.I)),
+]
 _WEIGHT_NOW = re.compile(r"\b(?:wt|weight)\b(?:[^.\n]|\.(?=\d)){0,40}?\b(?:now|currently|today)\s+(\d{2,3}(?:\.\d+)?)\s*kgs?\b", re.I)
 _LAB_CONTEXT = re.compile(r"^\s*(?:\w+\s+){0,2}(?:low|high|levels?|deficien\w*|is low|was low)\b", re.I)
 _INHALED = ("formoterol", "salmeterol", "fluticasone", "budesonide", "tiotropium", "salbutamol", "ipratropium",
@@ -351,11 +364,41 @@ class LocalExtractor(RuleExtractor):
 
     def _observations(self, note: str):
         out = super()._observations(note)
+        out += self._glucose(note, out)
         if not any(o.code == "weight" for o in out):
             from .schema import ExtractedObservation
             for m in _WEIGHT_NOW.finditer(note):  # "weight up 2.5 kg in a week (now 74 kg)"
                 out.append(ExtractedObservation(code="weight", value=float(m.group(1)), evidence=m.group(0)))
         return out
+
+    @staticmethod
+    def _glucose(note: str, existing) -> list:
+        """Post-meal and unlabelled glucose readings, without double-counting ones already labelled fasting/random."""
+        from .normalize import mmol_to_mgdl_glucose
+        from .schema import ExtractedObservation
+
+        taken = []
+        for o in existing:
+            if o.code.startswith("glucose"):
+                i = note.find(o.evidence)
+                if i >= 0:
+                    taken.append((i, i + len(o.evidence)))
+        found = []
+        for code, rx in _GLUCOSE_PATTERNS:
+            for m in rx.finditer(note):
+                if any(a < m.end() and m.start() < b for a, b in taken):
+                    continue
+                if code == "glucose_random" and re.search(r"(?:fasting|random|pp|post[- ]?prandial)\s*$", note[:m.start()], re.I):
+                    continue
+                v = float(m.group(1))
+                mmol = (m.group(2) or "").lower().startswith("mmol")
+                if v < 30 and not mmol:
+                    continue  # "sugar 5 days" is not a reading; small values need an explicit mmol/L
+                if mmol:
+                    v = mmol_to_mgdl_glucose(v)
+                taken.append((m.start(), m.end()))
+                found.append(ExtractedObservation(code=code, value=v, evidence=m.group(0).strip()))
+        return found
 
     # ------------------------------------------------------------------ follow-up
     def _follow_up_v2(self, note: str) -> int | None:
